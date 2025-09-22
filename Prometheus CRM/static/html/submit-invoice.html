@@ -1,0 +1,85 @@
+<div class="card">
+    <div class="card-header">
+        <h3>Заявка на оплату</h3>
+    </div>
+    <div class="card-body">
+        <form id="invoiceForm">
+            <div class="form-group">
+                <label for="applicant">Заявитель</label>
+                <input type="text" id="applicant" name="applicant" readonly required style="background-color: #e9ecef;">
+            </div>
+            <div class="form-group">
+                <label for="department">1. Выберите подразделение *</label>
+                <select id="department" name="department" required>
+                    <option value="">-- Выберите --</option>
+                </select>
+            </div>
+            
+            <input type="hidden" id="budgetItem" name="budgetItem">
+            
+            <div class="form-group">
+                <label for="registerItem">2. Выберите категорию бюджета *</label>
+                <select id="registerItem" name="registerItem" required>
+                    <option value="">-- Сначала выберите подразделение --</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="invoiceFile">Загрузите счет на оплату *</label>
+                <input type="file" id="invoiceFile" name="invoiceFile" accept=".pdf,.png,.jpg,.jpeg" required>
+            </div>
+            <button type="button" id="recognizeBtn" class="button-secondary"><i class="bi bi-magic"></i> Распознать данные</button>
+            <div id="spinner" style="display: none; margin-top: 10px;">Распознавание...</div>
+            
+            <hr>
+            
+            <h4>Детали счета</h4>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="kontragent">Контрагент *</label>
+                    <input type="text" id="kontragent" name="kontragent" required>
+                </div>
+                <div class="form-group">
+                    <label for="bin">БИН/ИИН *</label>
+                    <input type="text" id="bin" name="bin" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="invoiceNumber">Номер счета *</label>
+                    <input type="text" id="invoiceNumber" name="invoiceNumber" required>
+                </div>
+                <div class="form-group">
+                    <label for="invoiceDate">Дата счета *</label>
+                    <input type="date" id="invoiceDate" name="invoiceDate" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="totalAmount">Общая сумма *</label>
+                <input type="number" id="totalAmount" name="totalAmount" step="0.01" required>
+            </div>
+            <div class="form-group">
+                <label for="paymentPurpose">Назначение платежа *</label>
+                <textarea id="paymentPurpose" name="paymentPurpose" rows="3" required placeholder="Краткое содержание о платеже"></textarea>
+            </div>
+            
+            <div class="form-group conditional-field" id="contract-field" style="display:none;">
+                <label for="contractFile">Загрузите договор (обязательно для сумм > 393,200)</label>
+                <input type="file" id="contractFile" name="contractFile" accept=".pdf,.doc,.docx,.png,.jpg">
+            </div>
+            <div class="form-group conditional-field" id="memo-field" style="display:none;">
+                <label for="memoFile">Загрузите служебную записку (обязательно)</label>
+                <input type="file" id="memoFile" name="memoFile" accept=".pdf,.doc,.docx,.png,.jpg">
+            </div>
+
+            <div class="form-group">
+                <label for="paymentDate">Дата оплаты</label>
+                <input type="date" id="paymentDate" name="paymentDate">
+            </div>
+
+            <div class="modal-footer" style="padding: 0; margin-top: 1rem;">
+                 <button type="submit" id="submitBtn" class="button-primary">Отправить на согласование</button>
+            </div>
+        </form>
+    </div>
+</div>

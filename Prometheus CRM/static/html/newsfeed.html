@@ -1,0 +1,143 @@
+<div class="newsfeed-container">
+    <div class="card create-post-card">
+        <div class="composer-tabs">
+            <button class="composer-tab active" data-type="message">
+                <i class="bi bi-chat-right-text"></i> Сообщение
+            </button>
+            <button class="composer-tab" data-type="task" disabled title="В разработке">
+                <i class="bi bi-check2-circle"></i> Задача
+            </button>
+            <button class="composer-tab" data-type="event">
+                <i class="bi bi-calendar-event"></i> Событие
+            </button>
+            <button class="composer-tab" data-type="poll">
+                <i class="bi bi-bar-chart-steps"></i> Опрос
+            </button>
+        </div>
+        <div class="card-body">
+            <form id="newPostForm">
+                <div class="composer-content active" id="composer-message">
+                    <div id="post-editor-wrapper">
+                        <div id="newPostContent" class="form-control editor-content" contenteditable="true" data-placeholder="Что у вас нового?"></div>
+                        <div id="image-preview-container"></div>
+                    </div>
+                     <div class="editor-toolbar-bottom">
+                        <div class="editor-toolbar">
+                            <button type="button" class="toolbar-btn" data-command="bold" title="Жирный"><i class="bi bi-type-bold"></i></button>
+                            <button type="button" class="toolbar-btn" data-command="italic" title="Курсив"><i class="bi bi-type-italic"></i></button>
+                            <button type="button" class="toolbar-btn" data-command="underline" title="Подчеркнутый"><i class="bi bi-type-underline"></i></button>
+                            <label for="post-file-input" class="toolbar-btn" title="Прикрепить файл">
+                                <i class="bi bi-paperclip"></i>
+                            </label>
+                            <input type="file" id="post-file-input" name="files" multiple accept="image/*,video/*,.pdf,.doc,.docx,.xls,.xlsx" style="display: none;">
+                        </div>
+                        <span id="file-name-display" class="file-name"></span>
+                    </div>
+                </div>
+
+                <div class="composer-content" id="composer-poll" style="display: none;">
+                    <div class="form-group">
+                        <label for="poll-question">Текст сообщения (необязательно)</label>
+                        <div id="poll-message-editor" class="form-control editor-content" contenteditable="true" data-placeholder="Дополнительное описание опроса..."></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="poll-question-input">Вопрос опроса *</label>
+                        <input type="text" id="poll-question-input" class="form-control" placeholder="Ваш вопрос">
+                    </div>
+                    <div id="poll-options-container">
+                        <div class="form-group poll-option">
+                            <input type="text" class="form-control" placeholder="Вариант 1">
+                            <button type="button" class="remove-option-btn">&times;</button>
+                        </div>
+                        <div class="form-group poll-option">
+                            <input type="text" class="form-control" placeholder="Вариант 2">
+                            <button type="button" class="remove-option-btn">&times;</button>
+                        </div>
+                    </div>
+                    <button type="button" id="add-poll-option-btn" class="button-secondary btn-sm">Добавить вариант</button>
+                </div>
+
+                <!-- === НОВАЯ СЕКЦИЯ ДЛЯ СОЗДАНИЯ СОБЫТИЯ === -->
+                <div class="composer-content" id="composer-event" style="display: none;">
+                    <div class="form-group">
+                        <label for="event_title">Название события *</label>
+                        <input type="text" id="event_title" name="title" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="event_description">Описание</label>
+                        <textarea id="event_description" name="description" class="form-control" rows="3"></textarea>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="event_start_time">Время начала *</label>
+                            <input type="datetime-local" id="event_start_time" name="start_time" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="event_end_time">Время окончания *</label>
+                            <input type="datetime-local" id="event_end_time" name="end_time" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="event_location">Место (или ссылка на Google Meet)</label>
+                        <input type="text" id="event_location" name="location" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="event_participants">Участники</label>
+                        <div class="select-all-container" style="text-align: right; margin-top: -10px; margin-bottom: 5px;">
+                           <button type="button" class="select-all-btn" style="background:none; border:none; color:var(--primary-color); cursor:pointer; font-size: 12px;">Выбрать всех</button>
+                        </div>
+                        <select id="event_participants" name="participants" class="form-control" multiple style="min-height: 120px;"></select>
+                    </div>
+                </div>
+                <!-- === КОНЕЦ НОВОЙ СЕКЦИИ === -->
+
+                <div class="create-post-actions">
+                    <button id="submitPostBtn" type="submit" class="button-primary">Опубликовать</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <hr class="newsfeed-divider">
+
+    <div id="newsfeed-posts" class="posts-list">
+        </div>
+</div>
+
+<template id="news-post-template">
+    <div class="card news-post">
+        <div class="card-body">
+            <div class="post-header">
+                <div class="author-info">
+                    <img src="/static/placeholder.png" alt="author" class="user-photo-sm post-author-photo">
+                    <div>
+                        <div class="post-author-name"></div>
+                        <div class="post-timestamp"></div>
+                    </div>
+                </div>
+                <div class="post-actions" style="display: none;">
+                    <button class="action-menu-btn"><i class="bi bi-three-dots"></i></button>
+                    <div class="action-dropdown-content">
+                        </div>
+                </div>
+            </div>
+
+            <div class="post-content-display"></div>
+
+            <div class="post-content-edit" style="display: none;">
+                 <div class="editor-toolbar">
+                    <button type="button" class="toolbar-btn" data-command="bold" title="Жирный"><i class="bi bi-type-bold"></i></button>
+                    <button type="button" class="toolbar-btn" data-command="italic" title="Курсив"><i class="bi bi-type-italic"></i></button>
+                    <button type="button" class="toolbar-btn" data-command="underline" title="Подчеркнутый"><i class="bi bi-type-underline"></i></button>
+                 </div>
+                <div class="form-control editor-content" contenteditable="true"></div>
+                <div class="edit-actions">
+                    <button class="button-secondary btn-sm cancel-edit-btn">Отмена</button>
+                    <button class="button-primary btn-sm save-edit-btn">Сохранить</button>
+                </div>
+            </div>
+
+            <div class="post-attachment"></div>
+        </div>
+    </div>
+</template>

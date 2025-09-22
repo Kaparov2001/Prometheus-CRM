@@ -1,0 +1,60 @@
+/* ===================================================================
+   Prometheus CRM/static/css/variables.css
+   Description: Centralized CSS variables for consistent theming.
+   =================================================================== */
+
+:root {
+    /* Primary Colors */
+    --primary-color: #4A90E2; /* A vibrant blue for primary actions and highlights */
+    --primary-hover-color: #357ABD; /* Slightly darker blue for hover states */
+
+    /* Neutral/Grayscale Colors */
+    --background-color: #F7F8FC; /* Light gray for general page backgrounds */
+    --card-background-color: #FFFFFF; /* Pure white for cards, modals, and main content areas */
+    --border-color: #E8EBF0; /* Light gray for borders and separators */
+    --text-color-primary: #2D3748; /* Dark charcoal for main text content */
+    --text-color-secondary: #718096; /* Muted gray for secondary text, labels, and placeholders */
+    --text-color-light: #A0AEC0; /* Even lighter gray for subtle hints */
+
+    /* Status Colors */
+    --success-color: #48BB78; /* Green for success messages/indicators */
+    --danger-color: #E53E3E; /* Red for errors and destructive actions */
+    --warning-color: #ECC94B; /* Yellow/orange for warnings */
+    --info-color: #63B3ED; /* Light blue for informational messages */
+
+    /* Typography */
+    --font-family-base: 'Inter', sans-serif; /* Primary font for the application */
+    --font-size-base: 16px;
+    --font-size-sm: 0.875rem; /* 14px */
+    --font-size-lg: 1.125rem; /* 18px */
+
+    /* Spacing (using a modular scale) */
+    --spacing-xs: 0.25rem; /* 4px */
+    --spacing-sm: 0.5rem;  /* 8px */
+    --spacing-md: 1rem;    /* 16px */
+    --spacing-lg: 1.5rem;  /* 24px */
+    --spacing-xl: 2rem;    /* 32px */
+    --spacing-xxl: 3rem;   /* 48px */
+
+    /* Border Radii */
+    --border-radius-sm: 4px;
+    --border-radius-md: 8px;
+    --border-radius-lg: 12px;
+    --border-radius-full: 9999px; /* For perfect circles/pills */
+
+    /* Shadows */
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08); /* Light shadow for subtle depth */
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1); /* Medium shadow for cards/modals */
+    --shadow-lg: 0 10px 20px rgba(0, 0, 0, 0.15); /* Larger shadow for prominent elements */
+
+    /* Transitions */
+    --transition-speed-fast: 0.15s;
+    --transition-speed-normal: 0.3s;
+    --transition-speed-slow: 0.5s;
+    --transition-ease: ease-in-out;
+
+    /* Layout Specifics */
+    --sidebar-width: 260px;
+    --sidebar-width-collapsed: 80px;
+    --header-height: 70px;
+}

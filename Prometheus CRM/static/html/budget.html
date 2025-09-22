@@ -1,0 +1,34 @@
+<div class="card">
+    <div class="card-header">
+        <h3>Управление бюджетом</h3>
+        <div class="header-actions">
+            <button id="addDepartmentBtn" class="button-secondary">
+                <i class="bi bi-folder-plus"></i> Добавить подразделение
+            </button>
+            <button id="addBudgetItemBtn" class="button-secondary">
+                <i class="bi bi-list-nested"></i> Добавить статью бюджета
+            </button>
+            <button id="addRegistryItemBtn" class="button-primary">
+                <i class="bi bi-plus-circle"></i> Добавить статью в реестре
+            </button>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive-wrapper">
+            <table class="data-table" id="budget-table">
+                <thead>
+                    <tr>
+                        <th>Подразделение</th>
+                        <th>Статья бюджета</th>
+                        <th>Статья в реестре</th>
+                        <th class="text-right">Заложенная сумма</th>
+                        <th class="text-right">Остаток в бюджете</th>
+                        <th class="text-center">Действия</th>
+                    </tr>
+                </thead>
+                <tbody id="budgetTableBody">
+                    </tbody>
+            </table>
+        </div>
+    </div>
+</div>

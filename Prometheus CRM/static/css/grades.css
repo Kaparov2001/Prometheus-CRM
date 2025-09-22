@@ -1,0 +1,72 @@
+/* static/css/grades.css */
+@import url('./global.css');
+
+/* --- 1. Class List Table Specifics --- */
+.grades-list-table .teachers-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-size: var(--font-size-sm);
+}
+
+/* --- 2. Class Modal Specifics --- */
+#gradeModal .modal-content {
+    max-width: 700px; /* Увеличим ширину для удобства */
+}
+
+/* --- НОВЫЕ СТИЛИ: для списка назначений --- */
+.assignments-container {
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-md);
+    padding: var(--spacing-sm);
+    background-color: var(--background-color);
+    max-height: 250px;
+    overflow-y: auto;
+}
+
+.assignments-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.assignments-table th, .assignments-table td {
+    padding: var(--spacing-sm) var(--spacing-md);
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.assignments-table th {
+    font-weight: 600;
+    font-size: var(--font-size-sm);
+    color: var(--text-color-secondary);
+}
+
+.assignments-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.assignments-table .form-group {
+    margin-bottom: 0;
+}
+
+.remove-assignment-btn {
+    background: none;
+    border: none;
+    color: var(--danger-color);
+    cursor: pointer;
+    font-size: 1.2rem;
+}
+
+/* --- 3. Responsive adjustments --- */
+@media (max-width: 768px) {
+    .grades-list-table td::before {
+        content: attr(data-label);
+    }
+    .grades-list-table td:nth-of-type(1)::before { content: "Действия:"; }
+    .grades-list-table td:nth-of-type(2)::before { content: "Класс:"; }
+    .grades-list-table td:nth-of-type(3)::before { content: "Литер:"; }
+    .grades-list-table td:nth-of-type(4)::before { content: "Кол-во учеников:"; }
+    .grades-list-table td:nth-of-type(5)::before { content: "Сотрудники:"; }
+    .grades-list-table td:nth-of-type(6)::before { content: "Тип обучения:"; }
+    .grades-list-table td:nth-of-type(7)::before { content: "Язык обучения:"; }
+}

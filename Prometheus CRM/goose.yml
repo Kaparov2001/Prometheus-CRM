@@ -1,0 +1,4 @@
+driver: postgres
+# ИЗМЕНЕНО: goose будет автоматически подставлять значение из переменной окружения DB_URL
+open: ${DB_URL}
+dir: db/migrations

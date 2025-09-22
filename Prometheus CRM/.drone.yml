@@ -1,0 +1,43 @@
+# .drone.yml
+
+kind: pipeline
+type: docker # Указывает, что все шаги будут выполняться в Docker-контейнерах
+name: build-and-deploy
+
+# Конвейер будет запускаться только при пуше в ветку 'main'
+trigger:
+  branch:
+    - main
+  event:
+    - push
+
+steps:
+  # Шаг 1: Сборка и публикация Docker-образа вашего приложения
+  - name: build-and-publish
+    image: plugins/docker
+    settings:
+      # Для приватного репозитория лучше использовать Docker Hub или другой registry
+      username:
+        from_secret: DOCKER_USERNAME # Секрет из настроек Drone
+      password:
+        from_secret: DOCKER_PASSWORD # Секрет из настроек Drone
+      repo: yourdockerhubusername/prometheus-crm # ЗАМЕНИТЕ на ваше_имя/имя_репозитория
+      tags: latest
+      
+  # Шаг 2: Подключение к серверу и обновление приложения
+  - name: deploy
+    image: appleboy/drone-ssh
+    settings:
+      # Секреты для SSH-подключения к вашему серверу
+      host:
+        from_secret: 77.240.46.92
+      username:
+        from_secret: SERVER_USER
+      key:
+        from_secret: SSH_PRIVATE_KEY
+      script:
+        # Команды, которые будут выполнены на сервере
+        - cd /home/your_user/prometheus-crm # ЗАМЕНИТЕ на путь к вашему проекту на сервере
+        - docker compose pull # Скачиваем новый образ, который мы собрали на шаге 1
+        - docker compose up -d # Запускаем контейнеры с новым образом
+        - docker compose exec api goose -dir "/app/db/migrations" up # Применяем миграции

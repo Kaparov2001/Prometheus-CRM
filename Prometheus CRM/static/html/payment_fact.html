@@ -1,0 +1,141 @@
+<!-- crm/static/html/payment_fact.html -->
+<div class="card">
+    <div class="card-header">
+        <h3>Оплаты по договору факт</h3>
+        <button id="addPaymentBtn" class="button-primary">
+            <i class="bi bi-plus-lg"></i> Создать платеж
+        </button>
+    </div>
+    <div class="card-body">
+        <div class="filters-section" style="margin-bottom: 1rem;">
+            <input type="text" id="paymentSearchInput" class="form-control" placeholder="Поиск по номеру договора или ФИО, ИИН ученика...">
+        </div>
+        <div class="table-responsive-wrapper">
+            <table class="data-table" id="payment-fact-table">
+                <thead>
+                    <tr>
+                        <th class="text-center">Действия</th>
+                        <th>Номер договора</th>
+                        <th>ФИО ученика</th>
+                        <th>Сумма оплаты</th>
+                        <th>Дата оплаты</th>
+                        <th>Учебный год</th>
+                        <th>Наименование платежа</th>
+                        <th>Способ оплаты</th>
+                        <th>Сумма комиссии</th>
+                    </tr>
+                </thead>
+                <tbody id="paymentFactTableBody">
+                    <!-- Данные будут загружены сюда -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="card-footer">
+        <div class="pagination-container" id="paginationContainer"></div>
+    </div>
+</div>
+
+<!-- Модальное окно просмотра -->
+<div id="viewPaymentModal" class="modal-overlay" style="display: none;">
+    <div class="modal-content" style="max-width: 600px;">
+        <div class="modal-header">
+            <h4>Детали платежа</h4>
+            <button class="close-button">&times;</button>
+        </div>
+        <div class="modal-body" id="viewPaymentModalBody">
+            <!-- Детали будут загружены сюда -->
+        </div>
+        <div class="modal-footer">
+            <button class="button-secondary close-btn">Закрыть</button>
+        </div>
+    </div>
+</div>
+
+<!-- Модальное окно создания/изменения -->
+<div id="editPaymentModal" class="modal-overlay" style="display: none;">
+    <div class="modal-content" style="max-width: 800px;"> <!-- Увеличена ширина окна -->
+        <div class="modal-header">
+            <h4 id="paymentModalTitle">Создать оплату по договору факт</h4>
+            <button class="close-button">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form id="paymentForm">
+                <input type="hidden" id="paymentId">
+
+                <!-- Блок 1: Учебный год и выбор договора -->
+                <div class="form-row" style="grid-template-columns: 1fr 1fr;">
+                    <div class="form-group">
+                        <label for="startYear">Учебный год начало</label>
+                        <input type="number" id="startYear" class="form-control" placeholder="2024">
+                    </div>
+                    <div class="form-group">
+                        <label for="endYear">Учебный год окончание</label>
+                        <input type="number" id="endYear" class="form-control" placeholder="2025">
+                    </div>
+                </div>
+
+                <div class="form-row" style="grid-template-columns: 1fr 1fr 1fr;">
+                    <div class="form-group">
+                        <label for="payment_classSelect">Выберите класс</label>
+                        <select id="payment_classSelect" class="form-control">
+                           <option value="">-- Выберите класс --</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="payment_studentSelect">Выберите ученика/цу</label>
+                        <select id="payment_studentSelect" class="form-control" disabled>
+                            <option value="">-- Сначала выберите класс --</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="payment_contractSelect">Выберите договор</label>
+                        <select id="payment_contractSelect" name="contractId" class="form-control" disabled>
+                             <option value="">-- Сначала выберите ученика --</option>
+                        </select>
+                    </div>
+                </div>
+
+                <hr style="margin: 1.5rem 0;">
+
+                <!-- Блок 2: Детали платежа -->
+                <div class="form-group">
+                    <label for="paymentName">Наименование платежа</label>
+                    <select id="paymentName" class="form-control">
+                        <option value="Оплата за обучение">Оплата за обучение</option>
+                        <option value="Вступительный взнос">Вступительный взнос</option>
+                    </select>
+                </div>
+                <div class="form-row" style="grid-template-columns: 1fr 1fr;">
+                    <div class="form-group">
+                        <label for="paymentMethod">Способ оплаты</label>
+                        <select id="paymentMethod" class="form-control">
+                            <option value="">Выберите способ оплаты</option>
+                            <option value="Kaspi Integration">Kaspi Integration</option>
+                            <option value="Банковский перевод">Банковский перевод</option>
+                            <option value="Наличные">Наличные</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="paymentDate">Дата оплаты</label>
+                        <input type="date" id="paymentDate" class="form-control">
+                    </div>
+                </div>
+                 <div class="form-row" style="grid-template-columns: 1fr 1fr;">
+                    <div class="form-group">
+                        <label for="amount">Сумма оплаты</label>
+                        <input type="number" id="amount" class="form-control" step="0.01" placeholder="0.00">
+                    </div>
+                    <div class="form-group">
+                        <label for="commission">Сумма комиссии</label>
+                        <input type="number" id="commission" class="form-control" step="0.01" placeholder="0.00">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="button-secondary close-btn">Отмена</button>
+                    <button type="submit" class="button-primary">Сохранить</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

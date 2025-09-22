@@ -1,0 +1,80 @@
+<div class="card">
+    <div class="card-header">
+        <h3>Шаблоны договоров</h3>
+        <button id="addTemplateBtn" class="button-primary">
+            <i class="bi bi-plus-lg"></i> Добавить шаблон
+        </button>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive-wrapper">
+            <table class="data-table templates-list-table">
+                <thead>
+                    <tr>
+                        <th class="text-center">Действия</th>
+                        <th>Название</th>
+                        <th>Классификация</th>
+                        <th>Тип подписи</th>
+                    </tr>
+                </thead>
+                <tbody id="templatesTableBody">
+                    <tr><td colspan="4" class="text-center">Загрузка...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div id="templateModal" class="modal-overlay" style="display: none;">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h4>Добавить шаблон</h4>
+            <button id="closeTemplateModalBtn" class="close-button" aria-label="Закрыть">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form id="templateForm">
+                <div class="form-group">
+                    <label for="template_name">Название *</label>
+                    <input type="text" id="template_name" name="name" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="template_signatureType">Тип подписи</label>
+                        <select id="template_signatureType" name="signatureType">
+                            <option value="Одностороннее">Одностороннее</option>
+                            <option value="Двустороннее">Двустороннее</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="template_classification">Классификация документа</label>
+                        <select id="template_classification" name="classification">
+                            <option value="Контрагент">Контрагент</option>
+                            <option value="Сотрудник">Сотрудник</option>
+                            <option value="Ученик">Ученик</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Статус</label>
+                    <div class="switch-container">
+                        <input type="checkbox" id="template_status" name="status" class="switch" checked>
+                        <label for="template_status"></label>
+                        <span id="statusLabel">Активен</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="template_file">Файл шаблона *</label>
+                    <input type="file" id="template_file" name="file" class="form-control">
+                </div>
+                <div id="downloadLinkContainer" style="display: none; margin-top: 1rem;">
+                    <a href="#" id="downloadLink" class="button-secondary" download>
+                        <i class="bi bi-download"></i> Скачать текущий документ
+                    </a>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="cancelTemplateBtn" class="button-secondary">Отмена</button>
+                    <button type="submit" class="button-primary">Сохранить</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

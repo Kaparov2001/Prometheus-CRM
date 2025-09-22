@@ -1,0 +1,18 @@
+<!--?xml version="1.0" encoding="UTF-8"?-->
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" fill="none">
+  <!-- фон-плашка -->
+  <rect width="512" height="512" rx="40" fill="#fff9f2"></rect>
+  <!-- облако -->
+  <path d="M402 268a62 62 0 0 0-5-123 89 89 0 0 0-171-15
+           54 54 0 0 0-83 48 54 54 0 0 0 1 108h258Z" fill="#f4cb8a"></path>
+  <!-- ноутбук -->
+  <rect x="140" y="270" width="232" height="120" rx="14" fill="#2d3142"></rect>
+  <rect x="156" y="286" width="200" height="88" rx="8" fill="#ffffff"></rect>
+  <!-- клавиатура-полка -->
+  <rect x="172" y="386" width="168" height="8" rx="4" fill="#ccd3dc"></rect>
+  <!-- пользователь (кружок + туловище) -->
+  <circle cx="256" cy="222" r="38" fill="#ffdec1"></circle>
+  <path d="M222 310c0-24 68-24 68 0v20h-68Z" fill="#ffdec1"></path>
+  <!-- тень-дропшадоу -->
+  <ellipse cx="256" cy="448" rx="110" ry="16" fill="rgba(0,0,0,0.05)"></ellipse>
+</svg>

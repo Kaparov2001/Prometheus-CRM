@@ -1,0 +1,165 @@
+/* ===================================================================
+   Prometheus CRM/static/css/style_login.css
+   Description: Specific styles for the login and registration pages.
+   Depends on: variables.css, global.css
+   =================================================================== */
+
+/* Import global styles which includes variables */
+@import url('./global.css');
+
+/* --- 1. Main Layout (Split Screen) --- */
+.login-split {
+  display: flex;
+  min-height: 100vh; /* Ensure it takes full viewport height */
+  overflow: hidden; /* Prevent scrollbars */
+}
+
+/* --- 2. Left Panel (Branding/Illustration) --- */
+.login-left {
+  flex-basis: 50%;
+  background: var(--left-panel-bg, #f4c369); /* Using a fallback custom property if not defined elsewhere */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: var(--spacing-xxl); /* 48px padding */
+  box-shadow: var(--shadow-md); /* Use global shadow variable */
+  z-index: 1; /* Ensure it's above other elements if needed */
+}
+
+.login-logo {
+  width: 200px;
+  height: auto;
+  margin-bottom: var(--spacing-xl); /* 32px margin */
+}
+
+.login-illustration {
+  max-width: 80%;
+  height: auto;
+  margin-top: var(--spacing-xxl); /* 48px margin */
+}
+
+/* --- 3. Right Panel (Login/Register Form) --- */
+.login-right {
+  flex-basis: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: var(--spacing-xxl);
+  background-color: var(--card-background-color);
+}
+
+.login-form {
+  width: 100%;
+  max-width: 400px;
+}
+
+.login-form h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: var(--spacing-xl);
+  text-align: left; /* Align title to the left */
+  color: var(--text-color-primary);
+}
+
+/* --- 4. Form Elements Specifics --- */
+.login-form .form-control {
+    background-color: #f7f8fc;
+    border: none;
+    /* ИЗМЕНЕНИЕ: Уменьшены боковые отступы и добавлено выравнивание текста */
+    padding: 1.25rem 1.5rem; 
+    text-align: left;
+    margin-bottom: var(--spacing-md);
+    border-radius: var(--border-radius-md);
+    font-size: 1rem; /* Улучшение читаемости */
+}
+
+.password-container {
+  position: relative;
+}
+
+.password-toggle {
+  position: absolute;
+  right: var(--spacing-md);
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: var(--text-color-secondary);
+  font-size: 1.2rem;
+  user-select: none;
+}
+
+.form-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-xl);
+  font-size: var(--font-size-sm);
+}
+
+.form-check-input {
+  margin-right: var(--spacing-sm);
+  vertical-align: middle;
+}
+
+.login-form .button-primary {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1rem;
+}
+
+.alert-danger {
+    margin-top: var(--spacing-md);
+}
+
+.language-switcher {
+  text-align: center;
+  margin-top: var(--spacing-xl);
+}
+
+.language-switcher img {
+  width: 24px;
+  margin: 0 var(--spacing-sm);
+  cursor: pointer;
+  opacity: 0.6;
+  transition: opacity var(--transition-speed-fast) var(--transition-ease),
+              transform var(--transition-speed-fast) var(--transition-ease);
+}
+
+.language-switcher img:hover {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+
+/* --- 5. Responsive Adjustments --- */
+@media (max-width: 992px) {
+  .login-left {
+    display: none;
+  }
+
+  .login-right {
+    flex-basis: 100%;
+    justify-content: center;
+    padding: var(--spacing-xl);
+  }
+
+  .login-form {
+    max-width: 400px;
+    padding: var(--spacing-xl);
+  }
+}
+
+@media (max-width: 480px) {
+    .login-right {
+        padding: var(--spacing-md);
+    }
+    .login-form h2 {
+        font-size: 1.5rem;
+    }
+    .form-options {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-sm);
+    }
+}

@@ -1,0 +1,80 @@
+services:
+  # Сервис вашего Go-приложения
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: prometheus_api
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env
+    volumes:
+      # Том для постоянного хранения загруженных файлов
+      # Папка prometheus_uploads на сервере будет связана с папкой /app/static/uploads внутри контейнера
+      - prometheus_uploads:/app/static/uploads
+      - ./credentials.json:/app/credentials.json
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
+      libreoffice-converter: # <-- Теперь это Gotenberg
+        condition: service_started
+
+  libreoffice-converter: # <-- ИЗМЕНЕНО: Используем Gotenberg для конвертации PDF
+    image: gotenberg/gotenberg:7 # Рекомендуемый образ Gotenberg
+    container_name: prometheus_libreoffice_converter
+    restart: unless-stopped
+    ports:
+      - "3000:3000" # Порт по умолчанию для Gotenberg. API вашего Go-приложения будет обращаться сюда.
+    # Gotenberg не требует дополнительных томов для работы,
+    # он принимает файлы по HTTP и возвращает их.
+
+  # Сервис базы данных PostgreSQL
+  db:
+    image: postgres:15-alpine
+    container_name: prometheus_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Сервис для кэширования Redis
+  redis:
+    image: redis:7-alpine
+    container_name: prometheus_redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+
+  # Сервис для выполнения миграций базы данных
+  migrate:
+    build: .
+    command: >
+      sh -c "goose -dir db/migrations postgres $$DB_URL up"
+    env_file:
+      - .env
+    restart: "no"
+    depends_on:
+      db:
+        condition: service_healthy
+
+# Тома для хранения данных
+volumes:
+  # Том для данных PostgreSQL
+  postgres_data:
+  # Объявление тома для загруженных файлов
+  prometheus_uploads:
+  # libreoffice_shared_volume: # Этот том больше не нужен, если используется Gotenberg по HTTP

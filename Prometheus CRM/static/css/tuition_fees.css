@@ -1,0 +1,28 @@
+/* static/css/tuition_fees.css */
+
+.data-table input[type="number"] {
+    max-width: 250px;
+    text-align: right;
+    padding: 0.5rem;
+    border-radius: var(--border-radius-sm);
+    border: 1px solid var(--border-color);
+    /* NEW: Плавный переход для всех свойств */
+    transition: all 0.3s ease-in-out;
+    background-color: #f9fafb; /* NEW: Немного другой фон для инпутов */
+}
+
+/* NEW: Стили для поля ввода в фокусе */
+.data-table input[type="number"]:focus {
+    background-color: #ffffff;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(var(--primary-color-rgb), 0.2); /* Подсветка в стиле Bootstrap */
+    outline: none; /* Убираем стандартный outline */
+}
+
+.data-table td {
+    vertical-align: middle;
+}
+
+.data-table tbody tr:hover {
+    background-color: #f9fafb;
+}

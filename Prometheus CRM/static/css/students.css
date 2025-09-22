@@ -1,0 +1,190 @@
+/* ===================================================================
+   Prometheus CRM/static/css/students.css
+   Description: Specific styles for the "Students" list and modal.
+   Depends on: variables.css, global.css
+   =================================================================== */
+
+/* Import global styles which includes variables */
+@import url('./global.css');
+
+/* --- 1. Student List Table Specifics (Overrides/Additions) --- */
+
+/* ИСПРАВЛЕНИЕ: Уменьшаем отступы и задаем ширину для колонок с фото и действиями */
+.student-list-table th:nth-of-type(2), /* Заголовок "Фото" */
+.student-list-table td:nth-of-type(2) { /* Ячейка с фото */
+    padding-left: var(--spacing-md);
+    padding-right: var(--spacing-md);
+    width: 80px; /* Фиксированная ширина для стабильности */
+}
+
+.student-list-table th:nth-of-type(7), /* Заголовок "Действия" */
+.student-list-table td:nth-of-type(7) { /* Ячейка с кнопкой "Действия" */
+    padding-left: var(--spacing-sm);
+    padding-right: var(--spacing-sm);
+    width: 140px; /* Фиксированная ширина для кнопки */
+}
+
+
+/* Contract Toggle Button within the table */
+.contract-toggle-button {
+    background: none;
+    border: none;
+    color: var(--text-color-secondary);
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: color var(--transition-speed-fast) var(--transition-ease);
+    padding: 0; /* Remove default button padding */
+    display: flex; /* Allow centering of icon */
+    align-items: center;
+    justify-content: center;
+    width: 30px; /* Fixed width for consistent alignment */
+    height: 30px; /* Fixed height */
+    border-radius: var(--border-radius-md); /* Slightly rounded */
+}
+
+.contract-toggle-button:hover {
+    color: var(--primary-color);
+    background-color: var(--background-color); /* Light background on hover */
+}
+
+/* Hidden contracts section below student row */
+.contracts-row {
+    background-color: var(--background-color); /* Slightly different background for sub-row */
+}
+
+.contracts-row td {
+    padding: 0 !important; /* Remove default cell padding */
+    border-bottom: none !important; /* No bottom border for this row */
+}
+
+.contracts-section {
+    display: block; /* Controlled by JS to show/hide */
+    padding: var(--spacing-lg) var(--spacing-xl) var(--spacing-lg) calc(var(--spacing-xl) * 2); /* Indent sub-section */
+}
+
+.contracts-section h5 {
+    margin-top: 0;
+    margin-bottom: var(--spacing-md);
+    font-weight: 600;
+    color: var(--text-color-primary);
+}
+
+.contracts-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--font-size-sm); /* Slightly smaller font for nested table */
+}
+
+.contracts-table th, .contracts-table td {
+    padding: var(--spacing-sm) var(--spacing-md); /* Smaller padding for nested table cells */
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.contracts-table th {
+    color: var(--text-color-secondary);
+    font-weight: 500;
+    background-color: #FDFEFE; /* Very light background for nested table header */
+}
+
+.contracts-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.contract-number-link {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 500;
+}
+.contract-number-link:hover {
+    text-decoration: underline;
+}
+
+/* --- 2. Student Modal Specifics (Overrides/Additions) --- */
+#studentModal .modal-content {
+    max-width: 900px; /* Wider modal for student form */
+}
+
+/* Tabs inside the modal */
+.modal-tabs {
+    display: flex;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: var(--spacing-lg); /* 24px */
+    flex-wrap: wrap; /* Allow tabs to wrap on smaller screens */
+    gap: var(--spacing-sm); /* Gap between tabs */
+}
+
+.tab-link {
+    padding: 0.75rem 1rem; /* 12px 16px */
+    text-decoration: none;
+    color: var(--text-color-secondary);
+    margin-bottom: -1px; /* Overlap border with parent */
+    border-bottom: 2px solid transparent;
+    font-weight: 500;
+    transition: color var(--transition-speed-fast) var(--transition-ease),
+                border-color var(--transition-speed-fast) var(--transition-ease);
+}
+
+.tab-link:hover {
+    color: var(--primary-color);
+}
+
+.tab-link.active {
+    color: var(--primary-color);
+    border-bottom-color: var(--primary-color);
+}
+
+.tab-content {
+    flex-grow: 1; /* Allow content to fill space */
+}
+
+.tab-pane {
+    display: none; /* Hidden by default */
+}
+
+.tab-pane.active {
+    display: block; /* Show active tab content */
+}
+
+/* Photo preview in student modal */
+#studentPhoto {
+    display: none; /* Hide the actual file input */
+}
+
+/* Responsive adjustments for student list table */
+@media (max-width: 768px) {
+    .student-list-table td::before {
+        /* Specific labels for student table columns on mobile */
+        content: attr(data-label);
+    }
+
+    /* ИСПРАВЛЕНИЕ: Обновляем метки для мобильного вида в соответствии с актуальной таблицей */
+    .student-list-table td:nth-of-type(1)::before { content: "№:"; }
+    .student-list-table td:nth-of-type(2)::before { content: "Фото:"; }
+    .student-list-table td:nth-of-type(3)::before { content: "ФИО ученика:"; }
+    .student-list-table td:nth-of-type(4)::before { content: "Класс:"; }
+    .student-list-table td:nth-of-type(5)::before { content: "Литер:"; }
+    .student-list-table td:nth-of-type(6)::before { content: "Статус:"; }
+    .student-list-table td:nth-of-type(7)::before { content: "Действия:"; }
+
+    /* Adjust padding for contracts section on mobile */
+    .contracts-section {
+        padding: var(--spacing-md) var(--spacing-lg);
+    }
+
+    .contracts-table thead {
+        display: table-header-group; /* Show header for nested table on mobile */
+    }
+
+    .contracts-table td {
+        text-align: left; /* Reset text alignment for nested table cells */
+        padding: var(--spacing-xs) var(--spacing-sm); /* Smaller padding */
+        border-bottom: 1px solid var(--border-color);
+        display: table-cell; /* Reset to table-cell display */
+        width: auto;
+    }
+
+    .contracts-table td::before {
+        content: none; /* Hide pseudo-element labels for nested table */
+    }
+}

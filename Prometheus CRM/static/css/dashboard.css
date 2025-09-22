@@ -1,0 +1,877 @@
+/* ===================================================================
+   Prometheus CRM/static/css/dashboard.css
+   Description: Specific styles for the main dashboard layout and its components.
+   Depends on: variables.css, global.css
+   =================================================================== */
+
+/* Import global styles which includes variables */
+@import url('./global.css');
+
+/* Дополнительные переменные для нового дизайна */
+:root {
+    --border-color-light: #F3F4F6;
+    --success-color-dark: #2F855A;
+    --warning-color-dark: #B7791F;
+    --danger-color-dark: #B82727;
+    --font-size-xxs: 0.7rem; /* 11.2px */
+    --spacing-xxs: 0.25rem; /* 4px */
+    --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+
+/* --- 1. Main Dashboard Layout --- */
+.dashboard-layout{
+  display: block; /* проще всего убрать flex для корня */
+}
+
+.sidebar{
+  position: fixed;
+  left: 0; top: 0; bottom: 0;
+  width: var(--sidebar-width);
+  overflow-y: auto;
+  display: flex;              /* FIX: вернуть флекс-колонку для корректной компоновки */
+  flex-direction: column;     /* FIX */
+}
+
+.main-content{
+  margin-left: var(--sidebar-width); /* отступ под фиксированный сайдбар */
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  scroll-padding-top: var(--spacing-lg); /* FIX: для корректной работы sticky-панелей */
+}
+
+/* --- 2. Sidebar Specifics --- */
+.sidebar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-xxl); /* 48px margin */
+}
+
+.sidebar-logo {
+    height: 40px;
+    width: auto;
+    transition: opacity var(--transition-speed-fast) var(--transition-ease);
+}
+
+.sidebar-toggle {
+    background: none;
+    border: none;
+    color: var(--text-color-secondary);
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: var(--spacing-xs); /* Small padding for click area */
+    border-radius: var(--border-radius-sm);
+    transition: color var(--transition-speed-fast) var(--transition-ease),
+                background-color var(--transition-speed-fast) var(--transition-ease);
+}
+
+.sidebar-toggle:hover {
+    color: var(--primary-color);
+    background-color: var(--background-color);
+}
+
+.sidebar-nav {
+    flex-grow: 1; /* Allows nav to take remaining space */
+    overflow-y: auto; /* Enable scrolling for nav items if too many */
+    overflow-x: hidden;
+    padding-right: var(--spacing-sm); /* Prevent scrollbar from overlapping content */
+}
+
+.nav-group {
+    margin-bottom: var(--spacing-sm); /* 8px between groups */
+    position: relative; /* For fly-out menu positioning */
+}
+
+.nav-group-toggle {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 0.75rem var(--spacing-md); /* 12px 16px */
+    background: none;
+    border: none;
+    text-align: left;
+    font-size: var(--font-size-base);
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: var(--border-radius-md);
+    transition: background-color var(--transition-speed-fast) var(--transition-ease),
+                color var(--transition-speed-fast) var(--transition-ease);
+    white-space: nowrap;
+    color: var(--text-color-primary); /* Default text color */
+}
+
+.nav-group-toggle:hover {
+    background-color: var(--background-color);
+}
+
+.nav-group-toggle span {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md); /* Space between icon and text */
+}
+
+.nav-group-toggle .bi-chevron-down {
+    transition: transform var(--transition-speed-normal) var(--transition-ease);
+}
+
+/* Active/Open state for nav group */
+.nav-group.open .nav-group-toggle {
+    background-color: var(--primary-color);
+    color: var(--card-background-color); /* White text for active group */
+}
+.nav-group.open .nav-group-toggle .bi-chevron-down {
+    transform: rotate(180deg);
+}
+
+.nav-group-links {
+    max-height: 0; /* Hidden by default for accordion effect */
+    overflow: hidden;
+    transition: max-height 0.4s var(--transition-ease);
+    padding-left: var(--spacing-xl); /* Indent for sub-links */
+}
+
+.nav-link {
+    display: block;
+    color: var(--text-color-secondary);
+    text-decoration: none;
+    padding: 0.625rem var(--spacing-md); /* 10px 16px */
+    margin: var(--spacing-xs) 0; /* 4px vertical margin */
+    border-radius: var(--border-radius-md);
+    transition: background-color var(--transition-speed-fast) var(--transition-ease),
+                color var(--transition-speed-fast) var(--transition-ease);
+    white-space: nowrap;
+}
+
+.nav-link:hover, .nav-link.active {
+    color: var(--primary-color);
+    background-color: var(--background-color);
+    font-weight: 500;
+}
+
+/* Держать нижние элементы сайдбара у нижней кромки */
+.sidebar-footer,
+.admin-block { margin-top: auto; } /* FIX */
+
+/* --- 3. Collapsed Sidebar Styles (Fly-out Menu) --- */
+.sidebar.collapsed {
+    width: var(--sidebar-width-collapsed);
+    padding: var(--spacing-xl) var(--spacing-sm); /* Adjust padding for collapsed state */
+}
+
+/* Hide elements that should disappear when collapsed */
+.sidebar.collapsed .sidebar-logo,
+.sidebar.collapsed .nav-text,
+.sidebar.collapsed .nav-group-toggle .bi-chevron-down,
+.sidebar.collapsed .button-text { /* Hide text in logout button too */
+    opacity: 0;
+    width: 0;
+    pointer-events: none;
+    transition: opacity 0.2s, width 0.2s;
+}
+
+/* Center icons in collapsed state */
+.sidebar.collapsed .nav-group-toggle {
+    justify-content: center;
+}
+.sidebar.collapsed .nav-group-toggle span {
+    width: auto;
+    opacity: 1;
+    justify-content: center; /* Center icon within its span */
+}
+.sidebar.collapsed .nav-group-toggle .bi {
+    font-size: 1.5rem; /* Larger icon in collapsed state */
+    margin-right: 0;
+}
+
+/* Hide accordion effect in collapsed state */
+.sidebar.collapsed .nav-group.open .nav-group-links {
+    max-height: 0 !important; /* Force hide accordion */
+}
+
+/* Fly-out menu for collapsed sidebar */
+.sidebar.collapsed .nav-group:hover .nav-group-links {
+    position: absolute;
+    left: var(--sidebar-width-collapsed); /* Position right next to the collapsed sidebar */
+    top: 0;
+    width: 200px; /* Fixed width for the fly-out menu */
+    padding: var(--spacing-md);
+    background-color: var(--card-background-color);
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--border-color);
+    z-index: 1000;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateX(0);
+    transition: opacity 0.2s var(--transition-ease), visibility 0.2s var(--transition-ease), transform 0.2s var(--transition-ease);
+    transform: translateX(-10px); /* Slight slide-in effect */
+}
+
+/* --- 4. Main Header Styles --- */
+.page-header, /* Combined for shared properties */
+.main-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 var(--spacing-xl); /* 0 32px */
+    height: var(--header-height);
+    background-color: var(--card-background-color);
+    border-bottom: 1px solid var(--border-color);
+    flex-shrink: 0; /* Prevent header from shrinking */
+}
+
+/* Универсальный sticky-класс для заголовков/панелей внутри .main-content */
+.page-header.sticky, .page-toolbar.sticky {  /* FIX */
+    position: sticky; top: 0; z-index: 5;     /* FIX */
+    background: var(--card-background-color); /* FIX */
+    border-bottom: 1px solid var(--border-color); /* FIX */
+}
+
+.main-header h1 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0;
+    color: var(--text-color-primary);
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md); /* 16px space between items */
+}
+
+.header-actions button {
+    padding: var(--spacing-sm) var(--spacing-lg);
+}
+
+.user-profile-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: var(--text-color-primary);
+    gap: var(--spacing-sm); /* 8px space between photo and email */
+    padding: var(--spacing-xs) var(--spacing-sm); /* 4px 8px */
+    border-radius: var(--border-radius-md);
+    transition: background-color var(--transition-speed-fast) var(--transition-ease);
+}
+
+.user-profile-link:hover {
+    background-color: var(--background-color);
+}
+
+.user-photo-sm {
+    width: 36px;
+    height: 36px;
+    border-radius: var(--border-radius-full); /* Perfect circle */
+    object-fit: cover; /* Scale image to cover area, cropping if necessary */
+    border: 2px solid var(--border-color);
+    flex-shrink: 0; /* Prevent photo from shrinking */
+}
+
+.user-photo-lg { /* For modals */
+    width: 120px;
+    height: 120px;
+    border-radius: var(--border-radius-full);
+    object-fit: cover;
+    border: 3px solid var(--border-color);
+    cursor: pointer;
+    transition: border-color var(--transition-speed-fast) var(--transition-ease);
+}
+
+.user-photo-lg:hover {
+    border-color: var(--primary-color);
+}
+
+#logoutBtn {
+    padding: 0.625rem 1rem; /* Adjust padding for logout button */
+}
+
+/* --- 5. Content Area --- */
+.content-area{
+  padding: var(--spacing-xl);
+  flex-grow: 1;
+  overflow: visible;
+}
+
+/* --- 6. Permissions Grid (for Role Modal) --- */
+.permissions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: var(--spacing-lg); /* 24px gap */
+    background-color: var(--background-color); /* Light background for the grid */
+    padding: var(--spacing-md);
+    border-radius: var(--border-radius-md);
+    max-height: 40vh; /* Limit height and enable scroll */
+    overflow-y: auto;
+    border: 1px solid var(--border-color);
+}
+
+.permission-category {
+    break-inside: avoid; /* Prevents column break within a category */
+}
+
+.permission-category h5 {
+    font-size: var(--font-size-base);
+    font-weight: 600;
+    margin-top: 0;
+    margin-bottom: var(--spacing-sm); /* 8px */
+    padding-bottom: var(--spacing-xs); /* 4px */
+    border-bottom: 1px solid var(--border-color);
+    color: var(--text-color-primary);
+}
+
+.permission-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: var(--spacing-xs);
+}
+
+.permission-item label {
+    font-size: var(--font-size-sm);
+    font-weight: 400;
+    color: var(--text-color-primary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.permission-item input[type="checkbox"] {
+    margin-right: var(--spacing-sm);
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    flex-shrink: 0; /* Prevent checkbox from shrinking */
+}
+
+/* --- 7. "WOW" Стили для страницы финансового отдела --- */
+.finance-page {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.finance-header {
+    padding-bottom: var(--spacing-md);
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: var(--spacing-lg);
+}
+
+.finance-header h3 {
+    margin: 0;
+    font-size: 1.75rem;
+    font-weight: 700;
+}
+
+.finance-header .accent {
+    color: var(--primary-color);
+}
+
+#invoice-count {
+    font-weight: 400;
+    font-size: 1.5rem;
+    color: var(--text-color-secondary);
+}
+
+.invoice-cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: var(--spacing-lg);
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: var(--spacing-xs);
+}
+
+.invoice-card {
+    background: #fff;
+    border: 1px solid var(--border-color);
+    border-left: 5px solid var(--primary-color);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-sm);
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    padding: var(--spacing-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.invoice-card:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--primary-color);
+}
+
+.invoice-card h4 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.invoice-card .invoice-date {
+    font-size: 0.8rem;
+    color: var(--text-color-secondary);
+    margin-bottom: var(--spacing-sm);
+}
+
+.invoice-card p {
+    font-size: 0.875rem;
+    color: var(--text-color-secondary);
+    margin: 0;
+}
+.invoice-card p strong {
+    color: var(--text-color-primary);
+    font-weight: 500;
+}
+
+.invoice-card .invoice-amount {
+    margin-top: auto;
+    padding-top: var(--spacing-md);
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--text-color-primary);
+    text-align: right;
+}
+
+.invoice-card.status-pending { border-left-color: var(--warning-color); }
+.invoice-card.status-approved { border-left-color: var(--success-color); }
+.invoice-card.status-rejected { border-left-color: var(--danger-color); }
+.invoice-card.status-rework { border-left-color: var(--info-color); }
+
+
+/* --- 8. Унифицированная выезжающая панель деталей (Details Sidebar) --- */
+.details-sidebar {
+    position: fixed;
+    top: 0;
+    right: -480px; /* Скрыто по умолчанию */
+    width: 100%;
+    max-width: 480px;
+    height: 100vh;
+    background-color: var(--card-background-color);
+    box-shadow: -6px 0 20px rgba(0,0,0,0.12);
+    z-index: 1050;
+    transition: right 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+}
+
+.details-sidebar.open {
+    right: 0;
+}
+
+.details-sidebar .sidebar-header {
+    padding: var(--spacing-lg) var(--spacing-xl);
+    border-bottom: 1px solid var(--border-color);
+    flex-shrink: 0;
+}
+
+.details-sidebar .sidebar-header h4 {
+    font-size: 1.25rem;
+    margin: 0;
+}
+
+.details-sidebar .sidebar-content {
+    padding: var(--spacing-xl);
+    overflow-y: auto;
+    flex-grow: 1;
+}
+
+.sidebar-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.4);
+    z-index: 1040;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.sidebar-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.details-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-lg);
+}
+
+.detail-item {
+    padding-bottom: var(--spacing-lg);
+    border-bottom: 1px solid var(--border-color-light);
+}
+
+.detail-item:last-child {
+    border-bottom: none;
+}
+
+.detail-item strong {
+    font-size: 0.8rem;
+    color: var(--text-color-secondary);
+    margin-bottom: var(--spacing-sm);
+    font-weight: 500;
+    text-transform: uppercase;
+    display: block;
+}
+
+.detail-item span, .detail-item a {
+    font-size: 0.95rem;
+    display: block;
+    line-height: 1.6;
+}
+
+.file-links-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-sm);
+}
+
+.file-links-sidebar .button-secondary {
+    width: 100%;
+    justify-content: flex-start;
+    gap: var(--spacing-md);
+}
+
+.sidebar-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-md);
+    padding: var(--spacing-lg);
+    border-top: 1px solid var(--border-color);
+    background-color: #f9fafb;
+    flex-shrink: 0;
+}
+
+.sidebar-actions button {
+    font-weight: 600;
+    padding: 0.75rem;
+    border-radius: var(--border-radius-md);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-sm);
+    border: none;
+    box-shadow: var(--shadow-xs);
+    transition: all 0.2s ease;
+}
+
+.sidebar-actions button:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+}
+
+.sidebar-actions #approveActionBtn {
+    grid-column: 1 / -1;
+    background-color: var(--success-color);
+    color: white;
+}
+.sidebar-actions #approveActionBtn:hover {
+    background-color: var(--success-color-dark);
+}
+
+.sidebar-actions #reworkActionBtn {
+    background-color: var(--warning-color);
+    color: var(--text-color-primary);
+}
+.sidebar-actions #reworkActionBtn:hover {
+    background-color: var(--warning-color-dark);
+}
+
+.sidebar-actions #rejectActionBtn {
+    background-color: var(--danger-color);
+    color: white;
+}
+.sidebar-actions #rejectActionBtn:hover {
+    background-color: var(--danger-color-dark);
+}
+
+
+/* --- 9. Стили для интерфейса поручений (миниатюры) --- */
+.invoice-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 20px;
+    padding: 20px 0;
+}
+
+.invoice-thumbnail {
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    aspect-ratio: 3 / 4;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.invoice-thumbnail:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.invoice-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    background-color: #f8f9fa;
+}
+
+.thumbnail-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0));
+    color: white;
+    padding: 10px;
+    font-size: 14px;
+}
+
+.thumbnail-overlay p {
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* ОБНОВЛЕННЫЙ СТИЛЬ: Контейнер для иконки/фонового изображения в миниатюре */
+.thumbnail-icon-container {
+    width: 100%;
+    height: 100%;
+    background-image: url('/static/images/translucent-image.png'); /* Убедитесь, что путь правильный */
+    background-size: 70%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: #f8f9fa;
+}
+
+/* --- 10. Вспомогательные классы --- */
+
+/* Спиннер загрузки */
+.loading-spinner {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid var(--primary-color);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin: 50px auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Информационные сообщения. 
+  Рекомендуется перенести в глобальный файл стилей (global.css), если они используются в других частях приложения.
+*/
+.alert-info, .alert-danger {
+    padding: 15px;
+    border-radius: 8px;
+    width: 100%;
+    text-align: center;
+    margin: 1rem 0;
+}
+.alert-info {
+    background-color: #e7f3fe;
+    color: #31708f;
+    border: 1px solid #bce8f1;
+}
+.alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+
+/* --- 11. Responsive Adjustments --- */
+@media (max-width: 992px) {
+    .sidebar.collapsed .nav-group-links {
+        left: var(--sidebar-width-collapsed); /* Ensure flyout stays next to collapsed sidebar */
+    }
+}
+
+@media (max-width: 768px) {
+    .dashboard-layout {
+        flex-direction: column;
+    }
+    .sidebar {
+        width: 100%;
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid var(--border-color);
+        padding: var(--spacing-md) var(--spacing-lg); /* Adjust padding for mobile header */
+        flex-direction: row; /* Make sidebar items horizontal */
+        justify-content: space-between;
+        align-items: center;
+        /* === ИЗМЕНЕНИЕ: Убираем фиксацию на мобильных устройствах === */
+        position: static; 
+    }
+    .sidebar.collapsed { /* Disable collapsing on mobile */
+        width: 100%;
+        padding: var(--spacing-md) var(--spacing-lg);
+    }
+    /* Show all sidebar elements on mobile, even if "collapsed" class is present */
+    .sidebar.collapsed .sidebar-logo,
+    .sidebar.collapsed .nav-text,
+    .sidebar.collapsed .nav-group-toggle .bi-chevron-down,
+    .sidebar.collapsed .button-text {
+        opacity: 1;
+        width: auto;
+        pointer-events: auto;
+    }
+    .sidebar.collapsed .nav-group-toggle {
+        justify-content: flex-start; /* Align toggle content to start */
+    }
+    .sidebar.collapsed .nav-group-toggle .bi {
+        font-size: 1.2rem; /* Smaller icon on mobile */
+        margin-right: var(--spacing-sm);
+    }
+
+    /* Hide nav menu on mobile, only show toggle button */
+    .sidebar-nav {
+        display: none; /* Hide the entire navigation on small screens */
+    }
+
+    .main-header {
+        padding: 0 var(--spacing-md);
+        height: var(--header-height); /* Keep header height consistent */
+    }
+
+    .main-header h1 {
+        font-size: 1.25rem; /* Smaller title on mobile */
+    }
+
+    .user-profile-link span { /* Hide user email/login on small screens */
+        display: none;
+    }
+
+    #logoutBtn .button-text { /* Hide "Выйти" text on small screens */
+        display: none;
+    }
+
+    #logoutBtn .bi { /* Center logout icon */
+        margin: 0;
+    }
+
+    .content-area {
+        padding: var(--spacing-md); /* Smaller padding for content area */
+    }
+
+    .permissions-grid {
+        grid-template-columns: 1fr; /* Single column on small screens */
+        gap: var(--spacing-md);
+    }
+}
+
+@media (max-width: 480px) {
+    .main-header {
+        flex-wrap: wrap; /* Allow header items to wrap */
+        height: auto;
+        padding: var(--spacing-sm) var(--spacing-md);
+        gap: var(--spacing-sm);
+    }
+    .main-header h1 {
+        width: 100%; /* Title takes full width */
+        text-align: center;
+        margin-bottom: var(--spacing-sm);
+    }
+    .header-actions {
+        width: 100%;
+        justify-content: center;
+    }
+
+    /* Make details sidebar full-width on small screens */
+    .details-sidebar {
+        max-width: 100%;
+        right: -100%;
+    }
+    .details-sidebar.open {
+        right: 0;
+    }
+}
+/* Добавить в конец файла static/css/dashboard.css */
+.nav-link {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-badge {
+    background-color: var(--primary-color);
+    color: white;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 6px;
+    line-height: 1.5;
+    min-width: 20px;
+    text-align: center;
+    transition: all 0.3s ease;
+    transform: scale(0.9);
+    opacity: 0;
+    pointer-events: none; /* Чтобы не мешал кликам по ссылке */
+}
+
+.nav-badge.visible {
+    transform: scale(1);
+    opacity: 1;
+}
+/* ===================================================================
+   Стили для блока "Родственники" в карточке ученика
+   =================================================================== */
+
+.relatives-list {
+    margin-top: var(--spacing-sm);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.relative-block {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-sm) var(--spacing-md);
+    background-color: var(--background-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-md);
+    font-size: var(--font-size-sm);
+}
+
+.relative-block .remove-relative-btn {
+    background: none;
+    border: none;
+    color: var(--text-color-secondary);
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0 4px;
+}
+
+.relative-block .remove-relative-btn:hover {
+    color: var(--danger-color);
+}
+#studentModal .modal-content > form {
+    display: flex;
+    flex-direction: column;
+    /* Это заставит форму занять всю высоту модального окна,
+       позволяя .modal-body правильно скроллиться */
+    height: 100%;
+    overflow: hidden;
+}

@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>CRM Панель</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="/static/css/variables.css">
+  <link rel="stylesheet" href="/static/css/global.css">
+  <link rel="stylesheet" href="/static/css/dashboard.css">
+  <link rel="stylesheet" href="/static/css/budget.css">
+  <link rel="stylesheet" href="/static/css/chat.css">
+  <link rel="stylesheet" href="/static/css/tuition_fees.css">
+</head>
+<body>
+
+  <div class="dashboard-layout">
+
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <img src="/static/logo.png" alt="Логотип" class="sidebar-logo" />
+        <button class="sidebar-toggle" id="sidebarToggleBtn" title="Свернуть/развернуть меню">
+          <i class="bi bi-list"></i>
+        </button>
+      </div>
+        <nav class="sidebar-nav">
+         <div class="nav-group">
+             <a href="#" class="nav-group-toggle" id="showNewsfeed" title="Новости">
+                 <span>
+                     <i class="bi bi-newspaper"></i>
+                     <span class="nav-text">Новости</span>
+                 </span>
+             </a>
+         </div>
+         <div class="nav-group" id="nav-chat">
+             <a href="#" class="nav-group-toggle" id="showChatBtn" title="Чат">
+                 <span>
+                     <i class="bi bi-chat-dots"></i>
+                     <span class="nav-text">Чат</span>
+                 </span>
+                 <span class="nav-badge" id="chatBadge"></span>
+             </a>
+         </div>
+        
+         <div class="nav-group">
+             <a href="#" class="nav-group-toggle" id="showCalendar" title="Календарь">
+                 <span>
+                     <i class="bi bi-calendar-event"></i>
+                     <span class="nav-text">Календарь</span>
+                 </span>
+             </a>
+         </div>
+
+         <div class="nav-group" id="nav-applications">
+             <button class="nav-group-toggle" title="Заявки и тестирование">
+                 <span>
+                     <i class="bi bi-file-earmark-text"></i>
+                     <span class="nav-text">Заявки и тестирование</span>
+                 </span>
+                 <i class="bi bi-chevron-down"></i>
+             </button>
+           <div class="nav-group-links">
+             <a href="#" class="nav-link" id="showApps">Заявки</a>
+             <a href="#" class="nav-link">Канбан</a>
+             <a href="#" class="nav-link">Записи на тестирование</a>
+             <a href="#" class="nav-link">Отчёт по заявкам</a>
+           </div>
+         </div>
+
+         <div class="nav-group" id="nav-students-classes">
+           <button class="nav-group-toggle">
+             <span><i class="bi bi-people"></i> <span class="nav-text">Классы и ученики</span></span>
+             <i class="bi bi-chevron-down"></i>
+           </button>
+           <div class="nav-group-links">
+             <a href="#" class="nav-link" id="showStudents">Ученики</a>
+             <a href="#" class="nav-link" id="showGrades">Классы</a>
+           </div>
+         </div>
+
+         <div class="nav-group" id="nav-contracts">
+           <button class="nav-group-toggle">
+             <span><i class="bi bi-wallet2"></i> <span class="nav-text">Договора и оплаты</span></span>
+             <i class="bi bi-chevron-down"></i>
+           </button>
+           <div class="nav-group-links">
+             <a href="#" class="nav-link" id="showContracts">Договоры</a>
+             <a href="#" class="nav-link" id="showPlannedPayments">План платежей</a>
+             <a href="#" class="nav-link" id="showActualPayments">Оплаты факт</a>
+             <a href="#" class="nav-link" id="showPaymentReconciliation">Сверка платежей</a>
+             <a href="#" class="nav-link" id="showPaymentReport">Отчет по оплатам</a>
+           </div>
+         </div>
+
+         <div class="nav-group" id="nav-statements">
+             <button class="nav-group-toggle" title="Счета на оплату">
+                 <span>
+                     <i class="bi bi-file-earmark-check"></i>
+                     <span class="nav-text">Счета на оплату</span>
+                 </span>
+                 <i class="bi bi-chevron-down"></i>
+             </button>
+           <div class="nav-group-links">
+             <a href="#" class="nav-link" id="showSubmitInvoicePage">Заявка на оплату</a>
+             <a href="#" class="nav-link" id="showMyInvoicesPage">Мои счета<span class="nav-badge" id="myInvoicesBadge"></span></a>
+             <a href="#" class="nav-link" id="showFinanceInvoicesPage">Фин. отдел<span class="nav-badge" id="financeBadge"></span></a>
+             <a href="#" class="nav-link" id="showAccountingInvoicesPage">Бухгалтерия<span class="nav-badge" id="accountingBadge"></span></a>
+             <a href="#" class="nav-link" id="showAllInvoicesPage">Все заявления</a>
+             </div>
+         </div>
+        
+             <div class="nav-group" id="nav-directories">
+             <button class="nav-group-toggle">
+                 <span><i class="bi bi-book"></i> <span class="nav-text">Справочники</span></span>
+                 <i class="bi bi-chevron-down"></i>
+             </button>
+             <div class="nav-group-links">
+                 <a href="#" class="nav-link" id="showNationalities">Национальности</a>
+                 <a href="#" class="nav-link" id="showPermissions">Права доступа</a>
+                 <a href="#" class="nav-link" id="showPaymentForms">Формы оплаты</a>
+                 <a href="#" class="nav-link" id="showContractTemplates">Шаблоны договоров</a>
+                 <a href="#" class="nav-link" id="showBudget">Бюджет</a>
+                 <a href="#" class="nav-link" id="showSchedule">Расписание</a>
+                 <a href="#" class="nav-link" id="showTuitionFees">Стоимость обучения</a> </div>
+
+             </div>
+             <!-- FIX: removed stray </div> that prematurely closed .sidebar-nav -->
+            
+         <div class="nav-group" id="nav-administration">
+           <button class="nav-group-toggle">
+             <span><i class="bi bi-gear"></i> <span class="nav-text">Администрирование</span></span>
+             <i class="bi bi-chevron-down"></i>
+           </button>
+           <div class="nav-group-links">
+             <a href="#" class="nav-link" id="showRoles">Роли</a>
+             <a href="#" class="nav-link" id="showUsers">Пользователи</a>
+             <a href="#" class="nav-link" id="showIntegrations">Интеграции</a>
+             <a href="#" class="nav-link">Аудит логи</a>
+           </div>
+         </div>
+       </nav>
+    </aside>
+
+    <main class="main-content">
+      <header class="main-header">
+        <h1 id="pageTitle">Загрузка...</h1>
+        <div class="header-actions">
+            <a href="#" id="userProfileLink" class="user-profile-link" title="Редактировать профиль">
+                <img id="userProfilePhoto" src="/static/placeholder.png" alt="Фото" class="user-photo-sm">
+                <span id="userEmail">Загрузка...</span>
+            </a>
+          <button id="logoutBtn" class="button-secondary" title="Выйти из системы">
+            <i class="bi bi-box-arrow-right"></i> <span class="button-text">Выйти</span>
+          </button>
+        </div>
+      </header>
+
+      <div class="content-area" id="contentArea">
+        <div class="card">
+            <div class="card-body text-center">
+                <p>Выберите пункт меню для начала работы.</p>
+            </div>
+        </div>
+      </div>
+    </main>
+
+  </div> <aside id="chat-sidebar" class="chat-sidebar">
+      <div class="chat-sidebar-header">
+          <h4>Чаты</h4>
+          <button id="closeChatSidebarBtn" class="close-button">&times;</button>
+      </div>
+      <div class="chat-search-container">
+          <input type="text" id="chatSearchInput" placeholder="Поиск...">
+      </div>
+      <div id="chat-list-container" class="chat-list-container">
+          </div>
+      <div id="active-chat-window" class="active-chat-window" style="display: none;">
+          <div class="chat-window-header">
+              <h4 id="chat-title"></h4>
+          </div>
+          <div id="message-list" class="message-list">
+              </div>
+          <div class="message-input-area">
+              <textarea id="message-input" placeholder="Введите сообщение..." rows="1"></textarea>
+              <button id="sendMessageBtn" class="button-primary"><i class="bi bi-send"></i></button>
+          </div>
+      </div>
+      <div id="chat-placeholder" class="chat-placeholder">
+          <p>Выберите чат, чтобы начать общение</p>
+      </div>
+  </aside>
+
+  <div id="sidebar-overlay" class="sidebar-overlay"></div>
+  <div id="chat-overlay" class="sidebar-overlay"></div>
+
+ 
+  <div id="userModal" class="modal-overlay" style="display: none;">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h4>Создать пользователя</h4>
+              <button id="closeUserModalBtn" class="close-button" aria-label="Закрыть">&times;</button>
+          </div>
+          <div class="modal-body">
+              <form id="userForm">
+                  <div class="form-group text-center" style="margin-bottom: var(--spacing-lg);">
+                      <img id="userPhotoPreview" src="/static/placeholder.png" alt="Фото пользователя" class="user-photo-lg">
+                      <input type="file" id="userPhotoInput" name="photo" accept="image/*" style="display: none;">
+                      <p class="text-color-secondary" style="font-size: var(--font-size-sm); margin-top: var(--spacing-xs);">Нажмите на фото, чтобы изменить</p>
+                  </div>
+                  <div class="form-row">
+                      <div class="form-group">
+                          <label for="user_login">Логин *</label>
+                          <input type="text" id="user_login" name="login" required>
+                      </div>
+                      <div class="form-group">
+                          <label for="user_fullName">ФИО *</label>
+                          <input type="text" id="user_fullName" name="fullName" required>
+                      </div>
+                  </div>
+                  <div class="form-row">
+                      <div class="form-group">
+                          <label for="user_email">Email *</label>
+                          <input type="email" id="user_email" name="email" required>
+                      </div>
+                      <div class="form-group">
+                          <label for="user_phone">Телефон</label>
+                          <input type="tel" id="user_phone" name="phone">
+                      </div>
+                  </div>
+                  <div class="form-group" id="user-password-group">
+                      <label for="user_password">Пароль</label>
+                      <input type="password" id="user_password" name="password" placeholder="Введите для создания или смены">
+                  </div>
+                  <hr>
+                  <div class="form-row">
+                      <div class="form-group">
+                          <label for="user_roles">Роли</label>
+                          <select id="user_roles" name="roles" multiple style="min-height: 100px;"></select>
+                      </div>
+                      <div class="form-group">
+                          <label for="user_status">Статус</label>
+                          <select id="user_status" name="status" required>
+                              <option value="active">Активен</option>
+                              <option value="blocked">Заблокирован</option>
+                          </select>
+                      </div>
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" id="cancelUserBtn" class="button-secondary">Отмена</button>
+                      <button type="submit" class="button-primary">Сохранить</button>
+                  </div>
+              </form>
+          </div>
+      </div>
+  </div>
+
+  <div id="roleModal" class="modal-overlay" style="display: none;">
+      <div class="modal-content" style="max-width: 800px;">
+          <div class="modal-header">
+              <h4>Создать роль</h4>
+              <button id="closeRoleModalBtn" class="close-button" aria-label="Закрыть">&times;</button>
+          </div>
+          <div class="modal-body">
+              <form id="roleForm">
+                  <div class="form-row">
+                      <div class="form-group">
+                          <label for="roleName">Название роли *</label>
+                          <input type="text" id="roleName" name="name" required>
+                      </div>
+                      <div class="form-group">
+                          <label for="roleDescription">Описание</label>
+                          <textarea id="roleDescription" name="description" rows="3"></textarea>
+                      </div>
+                  </div>
+                  <hr>
+                  <div class="form-group">
+                      <label>Права доступа для роли</label>
+                      <div id="permissionsContainer" class="permissions-grid">
+                          <p class="text-color-secondary">Загрузка прав...</p>
+                      </div>
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" id="cancelRoleBtn" class="button-secondary">Отмена</button>
+                      <button type="submit" class="button-primary">Сохранить</button>
+                  </div>
+              </form>
+          </div>
+      </div>
+  </div>
+
+  <div id="editProfileModal" class="modal-overlay" style="display: none;">
+    <div class="modal-content" style="max-width: 600px;">
+        <div class="modal-header">
+            <h4>Редактирование профиля</h4>
+            <button id="closeProfileModalBtn" class="close-button" aria-label="Закрыть">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form id="editProfileForm" enctype="multipart/form-data">
+                <div class="form-group text-center" style="margin-bottom: var(--spacing-lg);">
+                    <img id="profilePhotoPreview" src="/static/placeholder.png" alt="Фото профиля" class="user-photo-lg">
+                    <input type="file" id="profilePhotoInput" name="photo" style="display: none;">
+                    <p class="text-color-secondary" style="font-size: var(--font-size-sm); margin-top: var(--spacing-xs);">Нажмите на фото, чтобы изменить</p>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="profile_fullName">Полное имя</label>
+                        <input type="text" id="profile_fullName" name="fullName">
+                    </div>
+                    <div class="form-group">
+                        <label for="profile_iin">ИИН</label>
+                        <input type="text" id="profile_iin" name="iin">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="profile_email">Email</label>
+                        <input type="email" id="profile_email" name="email">
+                    </div>
+                    <div class="form-group">
+                        <label for="profile_phone">Телефон</label>
+                        <input type="tel" id="profile_phone" name="phone">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="cancelProfileBtn" class="button-secondary">Отмена</button>
+                    <button type="submit" class="button-primary">Сохранить</button>
+                </div>
+            </form>
+        </div>
+    </div>
+  </div>
+
+  <div id="permissionModal" class="modal-overlay" style="display: none;">
+      <div class="modal-content" style="max-width: 500px;">
+          <div class="modal-header">
+              <h4>Создать право доступа</h4>
+              <button id="closePermissionModalBtn" class="close-button" aria-label="Закрыть">&times;</button>
+          </div>
+          <div class="modal-body">
+              <form id="permissionForm">
+                  <div class="form-group">
+                      <label for="permissionName">Системное имя (например, "users_view") *</label>
+                      <input type="text" id="permissionName" name="name" required>
+                  </div>
+                  <div class="form-group">
+                      <label for="permissionCategory">Категория (для группировки) *</label>
+                      <input type="text" id="permissionCategory" name="category" placeholder="Например: Пользователи, Финансы" required>
+                  </div>
+                  <div class="form-group">
+                      <label for="permissionDescription">Описание *</label>
+                      <textarea id="permissionDescription" name="description" rows="3" required></textarea>
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" id="cancelPermissionBtn" class="button-secondary">Отмена</button>
+                      <button type="submit" class="button-primary">Сохранить</button>
+                  </div>
+              </form>
+          </div>
+      </div>
+  </div>
+
+    <div id="nationalityModal" class="modal-overlay" style="display: none;">
+      <div class="modal-content" style="max-width: 500px;">
+          <div class="modal-header">
+              <h4>Национальность</h4>
+              <button id="closeNationalityModalBtn" class="close-button" aria-label="Закрыть">&times;</button>
+          </div>
+          <div class="modal-body">
+              <form id="nationalityForm">
+                  <div class="form-group">
+                      <label for="nationalityName">Название *</label>
+                      <input type="text" id="nationalityName" name="name" required>
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" id="cancelNationalityBtn" class="button-secondary">Отмена</button>
+                      <button type="submit" class="button-primary">Сохранить</button>
+                  </div>
+              </form>
+          </div>
+      </div>
+  </div>
+
+  <div id="gradeModal" class="modal-overlay" style="display: none;">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h4>Создать класс</h4>
+            <button id="closeGradeModalBtn" class="close-button" aria-label="Закрыть">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form id="gradeForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="grade_gradeNumber">Класс (цифра) *</label>
+                        <select id="grade_gradeNumber" name="gradeNumber" required>
+                            <option value="" disabled selected>Выберите номер</option>
+                            <option value="0">0 (Подготовительный)</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="grade_gradeLiter">Литер (буква) *</label>
+                        <input type="text" id="grade_gradeLiter" name="gradeLiter" placeholder="Например: А, Б, М" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="grade_studyType">Тип обучения</label>
+                        <select id="grade_studyType" name="studyType">
+                            <option value="Очный">Очный</option>
+                            <option value="Онлайн">Онлайн</option>
+                            <option value="Смешанный">Смешанный</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="grade_language">Язык обучения</label>
+                        <select id="grade_language" name="language">
+                            <option value="Русский">Русский</option>
+                            <option value="Казахский">Казахский</option>
+                            <option value="Английский">Английский</option>
+                        </select>
+                    </div>
+                </div>
+
+                <hr>
+
+                <div class="form-group">
+                    <label>Сотрудники класса</label>
+                    <div class="assignments-container">
+                        <table class="assignments-table">
+                            <thead>
+                                <tr>
+                                    <th>Сотрудник</th>
+                                    <th>Роль в классе</th>
+                                    <th class="text-center">Действие</th>
+                                </tr>
+                            </thead>
+                            <tbody id="assignmentsTableBody">
+                                </tbody>
+                        </table>
+                    </div>
+                    <button type="button" id="addAssignmentBtn" class="button-secondary" style="margin-top: 10px;">
+                        <i class="bi bi-plus-lg"></i> Добавить сотрудника
+                    </button>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" id="cancelGradeBtn" class="button-secondary">Отмена</button>
+                    <button type="submit" class="button-primary">Сохранить</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+ <div id="contractModal" class="modal-overlay" style="display: none;">
+      <div class="modal-content" style="max-width: 700px;">
+          <div class="modal-header">
+              <h4>Создать договор</h4>
+              <button id="closeContractModalBtn" class="close-button" aria-label="Закрыть">&times;</button>
+          </div>
+          <div class="modal-body">
+              <form id="contractForm">
+                  <div class="form-row">
+                      <div class="form-group">
+                          <label for="contract_studentId">Ученик *</label>
+                          <select id="contract_studentId" name="studentId" required>
+                              <option value="">Выберите ученика</option>
+                          </select>
+                      </div>
+                      <div class="form-group">
+                          <label for="contract_templateId">Шаблоны договора</label>
+                          <select id="contract_templateId" name="templateId">
+                              <option value="">Выберите шаблон</option>
+                          </select>
+                      </div>
+                  </div>
+                  <hr>
+                  <div class="form-row">
+                      <div class="form-group">
+                          <label for="contract_contractNumber">Номер договора</label>
+                          <input type="text" id="contract_contractNumber" name="contractNumber">
+                      </div>
+                      <div class="form-group">
+                          <label for="contract_signingMethod">Способ подписания</label>
+                          <select id="contract_signingMethod" name="signingMethod">
+                              <option value="Бумажный">Бумажный</option>
+                              <option value="Электронный">Электронный</option>
+                          </select>
+                      </div>
+                  </div>
+                  <div class="form-row">
+                      <div class="form-group">
+                          <label for="contract_startDate">Дата заключения *</label>
+                          <input type="date" id="contract_startDate" name="startDate" required>
+                      </div>
+                      <div class="form-group">
+                          <label for="contract_endDate">Дата окончания *</label>
+                          <input type="date" id="contract_endDate" name="endDate" required>
+                      </div>
+                  </div>
+                  <hr>
+                  <div class="form-row">
+                      <div class="form-group">
+                          <label for="contract_totalAmount">Сумма договора *</label>
+                          <input type="number" id="contract_totalAmount" name="totalAmount" required>
+                      </div>
+                      <div class="form-group">
+                          <label for="contract_discountPercentage">Процент скидки (%)</label>
+                          <input type="number" id="contract_discountPercentage" name="discountPercentage" min="0" max="100">
+                      </div>
+                      <div class="form-group">
+                          <label for="contract_discountedAmount">Сумма с учётом скидки</label>
+                          <input type="number" id="contract_discountedAmount" name="discountedAmount" readonly>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                      <label for="contract_paymentFormId">Форма оплаты</label>
+                      <select id="contract_paymentFormId" name="paymentFormId">
+                          <option value="">Выберите форму оплаты</option>
+                          </select>
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" id="cancelContractBtn" class="button-secondary">Отмена</button>
+                      <button type="submit" class="button-primary">Сохранить</button>
+                  </div>
+              </form>
+          </div>
+      </div>
+  </div>
+
+<div id="studentModal" class="modal-overlay" style="display: none;">
+    <div class="modal-content">
+        <form id="studentForm">
+            <input type="hidden" id="studentId" name="id">
+
+            <div class="modal-header">
+                <h4 id="studentModalTitle">Создать ученика</h4>
+                <button type="button" id="closeStudentModalBtn" class="close-button" aria-label="Закрыть">&times;</button>
+            </div>
+            
+            <div class="modal-body">
+                <div class="modal-tabs">
+                    <a href="#" class="tab-link active" data-tab="tab-main" role="tab" aria-selected="true">Основная информация</a>
+                    <a href="#" class="tab-link" data-tab="tab-contract" role="tab" aria-selected="false">Информация для договора</a>
+                    <a href="#" class="tab-link" data-tab="tab-additional" role="tab" aria-selected="false">Дополнительная информация</a>
+                </div>
+
+                <div class="tab-content">
+                    <div id="tab-main" class="tab-pane active" role="tabpanel">
+                        <div class="form-group text-center" style="margin-bottom: var(--spacing-lg);">
+                            <img id="student_photoPreview" src="/static/placeholder.png" alt="Предпросмотр" class="user-photo-lg"/>
+                            <input type="file" id="student_photo" name="photo" accept="image/*" style="display: none;">
+                            <p class="text-color-secondary" style="font-size: var(--font-size-sm); margin-top: var(--spacing-xs);">Нажмите на фото, чтобы изменить</p>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group"><label for="student_lastName">Фамилия *</label><input type="text" id="student_lastName" name="lastName" required></div>
+                            <div class="form-group"><label for="student_firstName">Имя *</label><input type="text" id="student_firstName" name="firstName" required></div>
+                            <div class="form-group"><label for="student_middleName">Отчество</label><input type="text" id="student_middleName" name="middleName"></div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group"><label for="student_iin">ИИН</label><input type="text" id="student_iin" name="iin"></div>
+                            <div class="form-group"><label for="student_gender">Пол</label><select id="student_gender" name="gender"><option value="">Не выбрано</option><option value="Мужской">Мужской</option><option value="Женский">Женский</option></select></div>
+                            <div class="form-group"><label for="student_birthDate">Дата рождения</label><input type="date" id="student_birthDate" name="birthDate"></div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="student_admissionYear">Год поступления</label>
+                                <select id="student_admissionYear" name="admissionYear"></select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group"><label for="student_studentPhone">Телефон ученика</label><input type="tel" id="student_studentPhone" name="studentPhone"></div>
+                            <div class="form-group"><label for="student_email">Email</label><input type="email" id="student_email" name="email"></div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group"><label for="student_language">Язык обучения</label><select id="student_language" name="language"><option value="Казахский">Казахский</option><option value="Русский">Русский</option></select></div>
+                            <div class="form-group"><label for="student_classId">Класс</label><select id="student_classId" name="classId"><option value="">Не выбрано</option></select></div>
+                        </div>
+                        <div class="form-group"><label class="checkbox-label"><input type="checkbox" id="student_isStudying" name="isStudying" value="true" checked> Учится</label></div>
+                        <div class="form-group"><label for="student_endDate">Дата окончания обучения</label><input type="date" id="student_endDate" name="endDate"></div>
+                        <hr>
+                        <div class="form-row">
+                            <div class="form-group"><label for="student_mothersName">ФИО мамы</label><input type="text" id="student_mothersName" name="mothersName"></div>
+                            <div class="form-group"><label for="student_mothersPhone">Телефон мамы</label><input type="tel" id="student_mothersPhone" name="mothersPhone"></div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group"><label for="student_fathersName">ФИО папы</label><input type="text" id="student_fathersName" name="fathersName"></div>
+                            <div class="form-group"><label for="student_fathersPhone">Телефон папы</label><input type="tel" id="student_fathersPhone" name="fathersPhone"></div>
+                        </div>
+                        <div class="form-group">
+                            <label>Родственники (братья/сестры)</label>
+                            <div id="relativesContainer" class="relatives-list"></div>
+                            <button type="button" id="addRelativeBtn" class="button-secondary btn-sm" style="margin-top: 10px;"><i class="bi bi-plus-lg"></i> Выбрать родственника</button>
+                        </div>
+                        <div class="form-group"><label for="student_comments">Комментарии</label><textarea id="student_comments" name="comments" rows="3"></textarea></div>
+                    </div>
+
+                    <div id="tab-contract" class="tab-pane" role="tabpanel">
+                        <h5 class="form-section-header">Информация о родителе для договора</h5>
+                        <div class="form-row">
+                            <div class="form-group"><label for="student_contractParentName">ФИО родителя</label><input type="text" id="student_contractParentName" name="contractParentName"></div>
+                            <div class="form-group"><label for="student_contractParentIIN">ИИН родителя</label><input type="text" id="student_contractParentIIN" name="contractParentIIN" maxlength="12"></div>
+                            <div class="form-group"><label for="student_contractParentBirthDate">Дата рождения родителя</label><input type="date" id="student_contractParentBirthDate" name="contractParentBirthDate"></div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group"><label for="student_contractParentEmail">Email родителя</label><input type="email" id="student_contractParentEmail" name="contractParentEmail"></div>
+                            <div class="form-group"><label for="student_contractParentPhone">Телефон родителя</label><input type="tel" id="student_contractParentPhone" name="contractParentPhone"></div>
+                        </div>
+                        <div class="form-row">
+                             <div class="form-group"><label for="student_contractParentDocumentNumber">Номер документа</label><input type="text" id="student_contractParentDocumentNumber" name="contractParentDocumentNumber"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="student_contractParentDocumentInfo">Кем и когда выдан документ</label>
+                            <input type="text" id="student_contractParentDocumentInfo" name="contractParentDocumentInfo" placeholder="Например: МВД РК, 15.03.2021">
+                        </div>
+                    </div>
+
+                    <div id="tab-additional" class="tab-pane" role="tabpanel">
+                        <h5 class="form-section-header">Документы и адреса</h5>
+                        <div class="form-group"><label class="checkbox-label"><input type="checkbox" id="student_isResident" name="isResident" value="true" checked> Резидент</label></div>
+                        <div class="form-row">
+                           <div class="form-group"><label for="student_nationalityId">Национальность</label><select id="student_nationalityId" name="nationalityId"><option value="">Не выбрано</option></select></div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group"><label for="student_birthCertificateNumber">№ свидетельства о рождении</label><input type="text" id="student_birthCertificateNumber" name="birthCertificateNumber"></div>
+                            <div class="form-group"><label for="student_birthCertificateIssueInfo">Кем и когда выдано</label><input type="text" id="student_birthCertificateIssueInfo" name="birthCertificateIssueInfo"></div>
+                        </div>
+                         <div class="form-group"><label for="student_homeAddress">Домашний адрес</label><input type="text" id="student_homeAddress" name="homeAddress"></div>
+                         <hr>
+                         <h5 class="form-section-header">Дополнительно</h5>
+                         <div class="form-row">
+                              <div class="form-group"><label for="student_mothersWorkPlace">Место работы мамы</label><input type="text" id="student_mothersWorkPlace" name="mothersWorkPlace"></div>
+                              <div class="form-group"><label for="student_mothersJobTitle">Должность мамы</label><input type="text" id="student_mothersJobTitle" name="mothersJobTitle"></div>
+                          </div>
+                          <div class="form-row">
+                              <div class="form-group"><label for="student_fathersWorkPlace">Место работы папы</label><input type="text" id="student_fathersWorkPlace" name="fathersWorkPlace"></div>
+                              <div class="form-group"><label for="student_fathersJobTitle">Должность папы</label><input type="text" id="student_fathersJobTitle" name="fathersJobTitle"></div>
+                          </div>
+                          <div class="form-group"><label for="student_previousSchoolId">Школа, из которой перешел</label><input type="text" id="student_previousSchoolId" name="previousSchoolId"></div>
+                          <div class="form-group"><label for="student_medicalInfo">Медицинские показания</label><textarea id="student_medicalInfo" name="medicalInfo" rows="3"></textarea></div>
+                    </div>
+                    </div>
+            </div>
+            
+            <div class="modal-footer">
+                <button type="button" id="cancelStudentBtn" class="button-secondary">Отмена</button>
+                <button type="submit" class="button-primary">Сохранить</button>
+                <button type="button" id="deleteStudentButton" class="button-danger" style="display: none; margin-left: auto;">Удалить ученика</button>
+            </div>
+        </form>
+    </div>
+</div>
+<div id="selectStudentModal" class="modal-overlay" style="display: none;">
+    <div class="modal-content" style="max-width: 700px;">
+        <div class="modal-header">
+            <h4>Выбрать ученика</h4>
+        </div>
+        <div class="modal-body">
+            <div class="search-container">
+                <input type="text" id="studentSearchInput" class="form-control" placeholder="Поиск по ФИО...">
+            </div>
+            <div class="table-responsive-wrapper" style="max-height: 40vh; overflow-y: auto;">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>ФИО</th>
+                            <th>Класс</th>
+                            <th class="text-center">Выбрать</th>
+                        </tr>
+                    </thead>
+                    <tbody id="studentsForSelectionTableBody">
+                        </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" id="closeSelectStudentModalBtn" class="button-secondary">Закрыть</button>
+        </div>
+    </div>
+</div>
+
+    <div id="paymentFormModal" class="modal-overlay" style="display: none;">
+    <div class="modal-content" style="max-width: 800px;">
+        <div class="modal-header">
+            <h4>Создать форму оплаты</h4>
+            <button id="closePaymentFormModalBtn" class="close-button" aria-label="Закрыть">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form id="paymentForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="paymentFormName">Имя *</label>
+                        <input type="text" id="paymentFormName" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="paymentFormInstallmentsCount">Количество платежей *</label>
+                        <input type="number" id="paymentFormInstallmentsCount" name="installments_count" min="1" value="1" required>
+                    </div>
+                </div>
+                <hr>
+                <div id="installmentsContainer">
+                    </div>
+                <div class="modal-footer">
+                    <button type="button" id="cancelPaymentFormBtn" class="button-secondary">Отмена</button>
+                    <button type="submit" class="button-primary">Сохранить</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div id="reworkInvoiceModal" class="modal-overlay" style="display: none;">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h4>Доработка счета на оплату</h4>
+            <button id="closeReworkModalBtn" class="close-button" aria-label="Закрыть">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form id="reworkInvoiceForm">
+                <div class="form-group">
+                    <label for="rework_applicant">Заявитель</label>
+                    <input type="text" id="rework_applicant" name="applicant" readonly style="background-color: #e9ecef;">
+                </div>
+                <div class="form-group">
+                    <label for="rework_department">Выберите подразделение *</label>
+                    <select id="rework_department" name="department" required></select>
+                </div>
+                <div class="form-group">
+                    <label for="rework_registerItem">Выберите статью в реестре *</label>
+                    <select id="rework_registerItem" name="registerItem" required>
+                        <option value="">Сначала выберите подразделение</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="rework_budgetItem">Статья бюджета (автоматически)</label>
+                    <input type="text" id="rework_budgetItem" name="budgetItem" readonly required style="background-color: #e9ecef;">
+                </div>
+                
+                <hr>
+                
+                <h4>Детали счета</h4>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="rework_kontragent">Контрагент</label>
+                        <input type="text" id="rework_kontragent" name="kontragent">
+                    </div>
+                    <div class="form-group">
+                        <label for="rework_bin">БИН/ИИН</label>
+                        <input type="text" id="rework_bin" name="bin">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="rework_invoiceNumber">Номер счета</label>
+                        <input type="text" id="rework_invoiceNumber" name="invoiceNumber">
+                    </div>
+                    <div class="form-group">
+                        <label for="rework_invoiceDate">Дата счета</label>
+                        <input type="date" id="rework_invoiceDate" name="invoiceDate">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="rework_totalAmount">Общая сумма</label>
+                    <input type="number" id="rework_totalAmount" name="totalAmount" step="0.01">
+                </div>
+                <div class="form-group">
+                    <label for="rework_paymentPurpose">Назначение платежа</label>
+                    <textarea id="rework_paymentPurpose" name="paymentPurpose" rows="3"></textarea>
+                </div>
+
+                <hr>
+                
+                <h4>Файлы</h4>
+                <div id="rework_existingFiles" class="form-group" style="background-color: #f8f9fa; padding: 15px; border-radius: 8px;">
+                    </div>
+
+                <div class="form-group">
+                    <label for="rework_invoiceFile">Загрузите новый счет на оплату (если нужно)</label>
+                    <input type="file" id="rework_invoiceFile" name="invoiceFile" accept=".pdf,.png,.jpg,.jpeg">
+                </div>
+                <div class="form-group">
+                    <label for="rework_contractFile">Загрузите новый договор (если нужно)</label>
+                    <input type="file" id="rework_contractFile" name="contractFile" accept=".pdf,.doc,.docx,.png,.jpg">
+                </div>
+                <div class="form-group">
+                    <label for="rework_memoFile">Загрузите новую служебную записку (если нужно)</label>
+                    <input type="file" id="rework_memoFile" name="memoFile" accept=".pdf,.doc,.docx,.png,.jpg">
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" class="button-primary">Отправить на повторное согласование</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<div id="details-sidebar" class="details-sidebar">
+      <div class="sidebar-header">
+          <h4 id="sidebar-title">Детали</h4>
+          <button id="close-sidebar-btn" class="close-button" title="Закрыть">&times;</button>
+      </div>
+      <div class="sidebar-content" id="sidebar-content-area">
+          </div>
+      
+      <div class="sidebar-actions" id="sidebar-actions-container">
+      </div>
+      </div>
+ 
+  <script type="module" src="/static/js/dashboard.js"></script>
+
+  <div id="departmentModal" class="modal-overlay" style="display: none;">
+    <div class="modal-content" style="max-width: 600px;">
+        <div class="modal-header">
+            <h4>Управление подразделениями</h4>
+            <button id="closeDepartmentModalBtn" class="close-button">&times;</button>
+        </div>
+        <div class="modal-body">
+            <h5>Актуальные подразделения</h5>
+            <div id="existing-departments-list" class="departments-list">
+                </div>
+            <hr>
+            <h5>Добавить новое подразделение</h5>
+            <form id="departmentForm">
+                <div id="departments-container">
+                    </div>
+                <button type="button" id="add-dept-field" class="button-secondary btn-sm" style="margin-top: 10px;">
+                    <i class="bi bi-plus-lg"></i> Добавить поле
+                </button>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" id="cancelDepartmentBtn" class="button-secondary">Отмена</button>
+            <button type="submit" form="departmentForm" class="button-primary">Сохранить новые</button>
+        </div>
+    </div>
+</div>
+<div id="budgetItemModal" class="modal-overlay" style="display: none;">
+    <div class="modal-content" style="max-width: 600px;">
+        <div class="modal-header">
+            <h4>Управление статьями бюджета</h4>
+            <button id="closeBudgetItemModalBtn" class="close-button">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label for="budgetItem_department_selector">Подразделение *</label>
+                <select id="budgetItem_department_selector" class="form-control" required>
+                    <option value="">-- Выберите подразделение для управления --</option>
+                </select>
+            </div>
+            
+            <div id="existing-budget-items-container" style="display: none;">
+                <hr>
+                <h5>Актуальные статьи</h5>
+                <div id="existing-budget-items-list" class="departments-list">
+                    </div>
+            </div>
+
+            <div id="add-new-budget-items-container" style="display: none;">
+                <hr>
+                <h5>Добавить новую статью</h5>
+                <form id="budgetItemForm">
+                    <div id="budget-items-container">
+                        </div>
+                    <button type="button" id="add-budget-item-field" class="button-secondary btn-sm" style="margin-top: 10px;">
+                        <i class="bi bi-plus-lg"></i> Добавить статью
+                    </button>
+                </form>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" id="cancelBudgetItemBtn" class="button-secondary">Отмена</button>
+            <button type="submit" form="budgetItemForm" class="button-primary">Сохранить новые</button>
+        </div>
+    </div>
+</div>
+<div id="registryItemModal" class="modal-overlay" style="display: none;">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h4>Добавить статью в реестре</h4>
+            <button id="closeRegistryItemModalBtn" class="close-button">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form id="registryItemForm">
+                <div class="form-group">
+                    <label for="registryItem_department">1. Выберите подразделение *</label>
+                    <select id="registryItem_department" class="form-control" required>
+                        <option value="">-- Выберите --</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="registryItem_budgetItem">2. Выберите статью бюджета *</label>
+                    <select id="registryItem_budgetItem" name="budgetItemId" class="form-control" required disabled>
+                        <option value="">-- Сначала выберите подразделение --</option>
+                    </select>
+                </div>
+                <hr>
+                <div class="form-group">
+                    <label for="registryItem_name">3. Название статьи в реестре *</label>
+                    <input type="text" id="registryItem_name" name="name" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="registryItem_amount">4. Заложенный бюджет *</label>
+                    <input type="number" id="registryItem_amount" name="amount" class="form-control" step="1" required>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" id="cancelRegistryItemBtn" class="button-secondary">Отмена</button>
+            <button type="submit" form="registryItemForm" class="button-primary">Сохранить</button>
+        </div>
+    </div>
+</div>
+
+<div id="popup-chat-window" class="popup-chat-window">
+    <div class="popup-chat-header">
+        <h5 id="popup-chat-title">Чат</h5>
+        <button id="popup-close-btn" class="close-button" title="Закрыть">&times;</button>
+    </div>
+    <div id="popup-message-list" class="popup-message-list">
+        </div>
+    <div class="popup-message-input-area">
+        <textarea id="popup-message-input" placeholder="Введите сообщение..." rows="1"></textarea>
+        <button id="popup-send-btn" class="button-primary"><i class="bi bi-send"></i></button>
+    </div>
+    <div class="resize-handle"></div>
+</div>
+<script type="module" src="https://cdn.jsdelivr.net/npm/emoji-picker-element@^1/index.js"></script>
+
+<div id="eventModal" class="modal-overlay" style="display: none;">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h4 id="eventModalTitle">Создать событие</h4>
+            <button id="closeEventModalBtn" class="close-button" aria-label="Close">&times;</button>
+        </div>
+        <form id="eventForm" class="modal-body">
+            <div class="form-group">
+                <label for="event_title">Название события *</label>
+                <input type="text" id="event_title" name="title" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label for="event_description">Описание</label>
+                <textarea id="event_description" name="description" class="form-control" rows="3"></textarea>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="event_start_time">Время начала *</label>
+                    <input type="datetime-local" id="event_start_time" name="start_time" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="event_end_time">Время окончания *</label>
+                    <input type="datetime-local" id="event_end_time" name="end_time" class="form-control" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="event_location">Место проведения (или ссылка на Google Meet)</label>
+                <input type="text" id="event_location" name="location" class="form-control" placeholder="Например, Конференц-зал или ссылка">
+            </div>
+
+            <div class="form-group">
+                <label for="event_participants">Участники</label>
+                <div class="select-all-container">
+                    <button type="button" class="select-all-btn" onclick="document.querySelectorAll('#event_participants option').forEach(o => o.selected = true);">Выбрать всех</button>
+                </div>
+                <select id="event_participants" name="participants" class="form-control" multiple>
+                    </select>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" id="cancelEventBtn" class="button-secondary">Отмена</button>
+                <button type="button" id="deleteEventBtn" class="button-danger" style="display: none; margin-right: auto;">Удалить</button>
+                <button type="submit" class="button-primary">Сохранить</button>
+            </div>
+        </form>
+    </div>
+</div>
+<div id="selectStudentModal" class="modal-overlay" style="display: none;">
+    <div class="modal-content" style="max-width: 700px;">
+        <div class="modal-header">
+            <h4>Выбрать ученика</h4>
+            <button id="closeSelectStudentModalBtn" class="close-button">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="search-container" style="margin-bottom: 1rem;">
+                <input type="text" id="studentSearchInput" class="form-control" placeholder="Поиск по ФИО...">
+            </div>
+            <div class="table-responsive-wrapper" style="max-height: 40vh; overflow-y: auto;">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>ФИО</th>
+                            <th>Класс</th>
+                            <th class="text-center">Выбрать</th>
+                        </tr>
+                    </thead>
+                    <tbody id="studentsForSelectionTableBody">
+                        </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="addPaymentModal" class="modal-overlay" style="display: none;">
+    <div class="modal-content" style="max-width: 500px;">
+        <div class="modal-header">
+            <h4 id="addPaymentModalTitle">Добавить оплату по договору</h4>
+            <button id="closeAddPaymentModalBtn" class="close-button">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form id="addPaymentForm">
+                <input type="hidden" id="paymentStudentId" name="studentId">
+                <div class="form-group">
+                    <label for="paymentContractSelect">Договор *</label>
+                    <select id="paymentContractSelect" name="contractId" class="form-control" required></select>
+                </div>
+                <div class="form-group">
+                    <label for="payment_form_id">Форма оплаты *</label>
+                    <select id="payment_form_id" name="payment_form_id" class="form-control" required>
+                        <option value="">Выберите форму оплаты</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="payment_amount">Сумма оплаты *</label>
+                    <input type="number" id="payment_amount" name="amount" class="form-control" required step="0.01">
+                </div>
+                <div class="form-group">
+                    <label for="payment_date">Дата оплаты *</label>
+                    <input type="date" id="payment_date" name="paymentDate" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="payment_comment">Комментарий</label>
+                    <textarea id="payment_comment" name="comment" class="form-control" rows="3"></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="cancelAddPaymentBtn" class="button-secondary">Отмена</button>
+                    <button type="submit" class="button-primary">Сохранить</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div id="filesModal" class="modal-overlay" style="display: none;">
+    <div class="modal-content" style="max-width: 800px;">
+        <div class="modal-header">
+            <h4 id="filesModalTitle">Файлы ученика</h4>
+            <button id="closeFilesModalBtn" class="close-button">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="table-responsive-wrapper">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Номер договора</th>
+                            <th>Дата создания</th>
+                            <th>Статус</th>
+                            <th class="text-center">Действия</th>
+                        </tr>
+                    </thead>
+                    <tbody id="filesTableBody">
+                        </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" id="cancelFilesModalBtn" class="button-secondary">Закрыть</button>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

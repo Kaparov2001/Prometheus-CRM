@@ -1,0 +1,44 @@
+# docker-compose.drone.yml
+
+version: '3.8'
+
+services:
+  # Сервер Drone, который принимает команды и управляет процессом
+  drone-server:
+    image: drone/drone:2
+    container_name: drone_server
+    restart: always
+    ports:
+      # Веб-интерфейс Drone будет доступен на этом порту.
+      # Вы можете изменить 8088 на любой другой свободный порт.
+      - "8088:80"
+    volumes:
+      # Сохраняем данные (пользователи, репозитории, история сборок) между перезапусками
+      - /var/lib/drone:/data
+    environment:
+      # --- Настройки для интеграции с GitHub ---
+      - DRONE_GITHUB_CLIENT_ID=${DRONE_GITHUB_CLIENT_ID}
+      - DRONE_GITHUB_CLIENT_SECRET=${DRONE_GITHUB_CLIENT_SECRET}
+      # --- Секрет для связи сервера и исполнителя ---
+      - DRONE_RPC_SECRET=${DRONE_RPC_SECRET}
+      # --- Адрес вашего сервера, как он виден из интернета ---
+      - DRONE_SERVER_HOST=${DRONE_SERVER_HOST}
+      - DRONE_SERVER_PROTO=http
+
+  # Исполнитель (Runner), который выполняет сборку в Docker-контейнерах
+  drone-runner:
+    image: drone/drone-runner-docker:1
+    container_name: drone_runner
+    restart: always
+    depends_on:
+      - drone-server
+    volumes:
+      # Позволяет исполнителю запускать Docker-контейнеры
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - DRONE_RPC_PROTO=http
+      - DRONE_RPC_HOST=drone-server
+      - DRONE_RPC_SECRET=${DRONE_RPC_SECRET}
+      # Настройки для исполнителя (можно оставить по умолчанию)
+      - DRONE_RUNNER_CAPACITY=2
+      - DRONE_RUNNER_NAME=my-docker-runner

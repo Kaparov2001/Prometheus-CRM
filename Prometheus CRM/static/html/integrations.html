@@ -1,0 +1,78 @@
+<div class="card">
+    <div class="card-body">
+        <div class="modal-tabs">
+            <a href="#" class="tab-link active" data-tab="tab-trustme">TrustMe</a>
+            <a href="#" class="tab-link" data-tab="tab-whatsapp" style="color: #999; cursor: not-allowed;" onclick="return false;">WhatsApp (скоро)</a>
+            <a href="#" class="tab-link" data-tab="tab-crm" style="color: #999; cursor: not-allowed;" onclick="return false;">CRM (скоро)</a>
+        </div>
+
+        <div class="tab-content">
+            <div id="tab-trustme" class="tab-pane active" style="padding-top: 2rem;">
+                <form id="trustmeSettingsForm">
+                    <div class="form-group" style="max-width: 500px;">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="trustme_isEnabled" name="isEnabled"> Включить интеграцию с TrustMe
+                        </label>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="trustme_url">URL</label>
+                        <input type="text" id="trustme_url" name="url" class="form-control" placeholder="https://test.trustme.kz/frost_contract_public_apis/">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="trustme_orgName">Название организации</label>
+                        <input type="text" id="trustme_orgName" name="orgName" class="form-control" placeholder="ТОО 'EPG Prometheus School'">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="trustme_token">Токен</label>
+                        <input type="text" id="trustme_token" name="token" class="form-control" placeholder="Ваш API токен">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="trustme_webhookUrl">Ссылка на вебхук</label>
+                        <input type="text" id="trustme_webhookUrl" name="webhookUrl" class="form-control" placeholder="https://prometheus.linked.kz/api/services/app/TrustMeV2">
+                    </div>
+
+                     <div class="form-group">
+                        <label for="trustme_signerNumber">Номера телефонов подписантов (через запятую)</label>
+                        <input type="text" id="trustme_signerNumber" name="signerNumber" class="form-control" placeholder="+77753698402, +77012345678">
+                    </div>
+
+                    <div class="modal-footer" style="padding: 0; margin-top: 1.5rem;">
+                         <button type="submit" class="button-primary">Сохранить настройки</button>
+                    </div>
+                </form>
+
+                <hr>
+
+                <h4>Отправка и статусы договоров</h4>
+                <div id="trustme-actions" style="display: flex; gap: 1rem; align-items: flex-end; margin-bottom: 1.5rem;">
+                    <div class="form-group" style="flex-grow: 1; margin-bottom: 0;">
+                        <label for="trustme_contract_select">Выберите договор для отправки</label>
+                        <select id="trustme_contract_select" class="form-control">
+                            <option value="">Загрузка...</option>
+                        </select>
+                    </div>
+                    <button id="sendToTrustMeBtn" class="button-primary" style="margin-bottom: 0;">Отправить на подпись</button>
+                </div>
+
+                <div class="table-responsive-wrapper">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Договор CRM</th>
+                                <th>Статус в TrustMe</th>
+                                <th>ID в TrustMe</th>
+                                <th>Дата отправки</th>
+                                <th class="text-center">Действия</th>
+                            </tr>
+                        </thead>
+                        <tbody id="trustmeDocumentsTable"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

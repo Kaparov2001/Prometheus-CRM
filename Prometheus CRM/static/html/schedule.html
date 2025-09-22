@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Расписание</title>
+</head>
+<body>
+    <div class="container">
+        <div class="filters-card card">
+            <div class="card-body">
+                <div class="filter-grid">
+                    <div class="form-group">
+                        <label for="class-select">Класс</label>
+                        <select id="class-select" class="form-control">
+                            <option value="">Выберите класс</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="year-select">Учебный год</label>
+                        <select id="year-select" class="form-control">
+                            <option value="">Выберите год</option>
+                            <option value="2024-2025">2024-2025</option>
+                            <option value="2025-2026">2025-2026</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="quarter-select">Четверть</label>
+                        <select id="quarter-select" class="form-control">
+                            <option value="">Выберите четверть</option>
+                            <option value="1">1-я четверть</option>
+                            <option value="2">2-я четверть</option>
+                            <option value="3">3-я четверть</option>
+                            <option value="4">4-я четверть</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="page-actions">
+            <button id="load-schedule-btn" class="button-secondary" disabled>
+                <i class="bi bi-arrow-clockwise"></i> Загрузить
+            </button>
+            <button id="create-schedule-btn" class="button-secondary" disabled>
+                <i class="bi bi-pencil-square"></i> Создать / Изменить
+            </button>
+            <button id="ai-generate-btn" class="button-primary" disabled>
+                <i class="bi bi-magic"></i> Создать с помощью ИИ
+            </button>
+        </div>
+
+        <div class="card">
+             <div class="card-header">
+                <h3 id="schedule-title"></h3>
+            </div>
+            <div class="card-body">
+                <div id="schedule-view">
+                    <p>Выберите класс, год и четверть, чтобы загрузить расписание.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Новый встроенный редактор расписания -->
+        <div id="schedule-editor-container" class="card" style="display: none; margin-top: var(--spacing-xl);">
+            <div class="card-header">
+                <h3>Редактор расписания</h3>
+                <button id="close-editor-btn" class="close-button" title="Закрыть редактор">&times;</button>
+            </div>
+            <div class="card-body">
+                <p>Класс: <b id="editor-class-name"></b> | Год: <b id="editor-year"></b> | Четверть: <b id="editor-quarter"></b></p>
+                <div id="schedule-table-editor" class="table-responsive-wrapper">
+                    <!-- Сюда JS будет вставлять таблицу для редактирования -->
+                </div>
+            </div>
+            <div class="card-footer text-right">
+                 <button id="save-schedule-btn" class="button-primary">Сохранить расписание</button>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

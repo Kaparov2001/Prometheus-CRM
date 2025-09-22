@@ -1,0 +1,207 @@
+<!-- 
+  ===================================================================
+  Prometheus CRM/static/html/contracts.html
+  Description: HTML structure for the Contracts page. 
+  This page displays a list of contracts, includes a search bar, 
+  and action buttons within each table row. It also defines the 
+  structure for various modals used for managing contracts.
+  ===================================================================
+-->
+<div class="contracts-page">
+  <div class="card">
+    <div class="card-header">
+      <h3>Список договоров</h3>
+      <!-- Кнопка "Действия" в заголовке была удалена согласно вашему требованию -->
+    </div>
+
+    <div class="card-body">
+      <!-- Фильтры / поиск -->
+      <div class="filters-section" style="margin-bottom: 1rem;">
+        <input
+          type="text"
+          id="contractsSearchInput"
+          class="form-control"
+          placeholder="Поиск по номеру договора или ФИО ученика..."
+        >
+      </div>
+
+      <!-- Обёртка для таблицы, чтобы контролировать overflow -->
+      <div class="table-responsive-wrapper">
+        <table class="data-table contracts-list-table">
+          <thead>
+            <tr>
+              <th class="text-center">Действия</th>
+              <th>Номер договора</th>
+              <th>Дата заключения</th>
+              <th>Дата окончания</th>
+              <th>Статус договора</th>
+              <th>Стоимость договора</th>
+              <th>План платежей</th>
+              <th>ФИО Ученика</th>
+              <th>Класс</th>
+              <th>Менеджер</th>
+            </tr>
+          </thead>
+          <tbody id="contractsTableBody">
+            <!-- Содержимое таблицы динамически генерируется JavaScript -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card-footer">
+      <!-- Пагинация -->
+      <div class="pagination-container" id="paginationContainer"></div>
+    </div>
+  </div>
+</div>
+
+<!-- 
+  Contract Modal: просмотр/редактирование договора
+  JS сам включает режим только чтения, отключая поля и скрывая кнопку "Сохранить".
+-->
+<div id="contractModal" class="modal-overlay" style="display: none;">
+  <div class="modal-content" style="max-width: 700px;">
+    <div class="modal-header">
+      <h4 id="contractModalTitle">Изменить договор</h4>
+      <button id="closeContractModalBtn" class="close-button">&times;</button>
+    </div>
+    <div class="modal-body">
+      <form id="contractForm">
+        <div id="student-info-group">
+          <div class="form-group">
+            <label>Ученик</label>
+            <input type="text" id="studentFullName" name="studentFullName" class="form-control" readonly>
+          </div>
+        </div>
+
+        <hr>
+
+        <div id="contract-details-group">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="contract_contractNumber">Номер договора</label>
+              <input type="text" id="contract_contractNumber" name="contractNumber" class="form-control" readonly>
+            </div>
+            <div class="form-group">
+              <label for="contract_signingMethod">Способ подписания</label>
+              <select id="contract_signingMethod" name="signingMethod" class="form-control">
+                <option value="Trust Me">Trust Me</option>
+                <option value="Бумажный">Бумажный</option>
+                <option value="Электронный">Электронный</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="contract_startDate">Дата заключения</label>
+              <input type="date" id="contract_startDate" name="startDate" class="form-control">
+            </div>
+            <div class="form-group">
+              <label for="contract_endDate">Дата окончания</label>
+              <input type="date" id="contract_endDate" name="endDate" class="form-control">
+            </div>
+          </div>
+        </div>
+
+        <hr>
+
+        <div id="financial-info-group">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="contract_totalAmount">Сумма договора</label>
+              <input type="number" id="contract_totalAmount" name="totalAmount" class="form-control">
+            </div>
+            <div class="form-group">
+              <label for="contract_discountPercentage">Процент скидки (%)</label>
+              <input type="number" id="contract_discountPercentage" name="discountPercentage" min="0" max="100" class="form-control">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="contract_discountedAmount">Сумма с учётом скидки</label>
+            <input type="number" id="contract_discountedAmount" name="discountedAmount" class="form-control" readonly>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" id="cancelContractBtn" class="button-secondary">Отмена</button>
+          <button type="submit" class="button-primary">Сохранить изменения</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- 
+  Plan Modal: создание плана платежей
+-->
+<div id="planModal" class="modal-overlay" style="display: none;">
+  <div class="modal-content" style="max-width: 850px;">
+    <div class="modal-header">
+      <h4 id="planModalTitle">Создать план платежей за учебный год</h4>
+      <button id="closePlanModalBtn" class="close-button">&times;</button>
+    </div>
+    <div class="modal-body">
+      <form id="planForm">
+        <input type="hidden" id="planContractId">
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="plan_paymentForm">Форма оплаты</label>
+            <select id="plan_paymentForm" name="paymentFormId" class="form-control"></select>
+          </div>
+          <div class="form-group">
+            <label>Создать платежи за:</label>
+            <div class="year-inputs" style="display: flex; align-items: center; gap: 10px;">
+              <input type="number" id="plan_startYear" class="form-control" value="2025" readonly>
+              <span>-</span>
+              <input type="number" id="plan_endYear" class="form-control" value="2026" readonly>
+            </div>
+          </div>
+        </div>
+
+        <div class="discount-buttons" style="margin-bottom: 1rem; display: flex; gap: 10px;">
+          <button type="button" class="button-secondary active" id="sumDiscountBtn">Сумма скидки</button>
+          <button type="button" class="button-secondary" id="percentDiscountBtn">Процент скидки</button>
+        </div>
+
+        <div class="form-row" style="grid-template-columns: 1fr 1fr 1fr;">
+          <div class="form-group">
+            <label for="plan_totalAmount">Сумма договора</label>
+            <input type="text" id="plan_totalAmount" class="form-control" readonly>
+          </div>
+          <div class="form-group" id="plan_percentDiscountGroup" style="display: none;">
+            <label for="plan_discountPercentage">Процент скидки</label>
+            <input type="number" id="plan_discountPercentage" name="discountPercentage" class="form-control" value="0" min="0" max="100" readonly>
+          </div>
+          <div class="form-group" id="plan_sumDiscountGroup">
+            <label for="plan_discountAmount">Сумма скидки</label>
+            <input type="number" id="plan_discountAmount" class="form-control" value="0">
+          </div>
+          <div class="form-group">
+            <label for="plan_discountedAmount">Сумма с учётом скидки</label>
+            <input type="text" id="plan_discountedAmount" class="form-control" readonly>
+          </div>
+        </div>
+
+        <hr>
+
+        <div id="plan_installments_container">
+          <!-- Поля по платежам генерирует JS -->
+        </div>
+
+        <div class="form-group">
+          <label class="checkbox-label">
+            <input type="checkbox" id="plan_hasContribution" name="hasContribution"> Вступительный взнос
+          </label>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" id="cancelPlanBtn" class="button-secondary">Отмена</button>
+          <button type="submit" id="savePlanBtn" class="button-primary">Сохранить</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

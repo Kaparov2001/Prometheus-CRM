@@ -1,0 +1,204 @@
+<div class="card">
+    <div class="card-header">
+        <h3>План платежей</h3>
+        <div class="header-actions">
+            <button id="exportExcelBtn" class="button-secondary">
+                <i class="bi bi-file-earmark-excel"></i> Экспорт в Excel
+            </button>
+            <button id="createPlanBtn" class="button-primary">
+                <i class="bi bi-plus-lg"></i> Создать план платежей
+            </button>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="search-container" style="max-width: 100%; margin-bottom: 1rem;">
+             <input type="text" id="plannedPaymentsSearchInput" class="form-control" placeholder="Поиск по комментарию, номеру договора или ФИО, ИИН ученика...">
+             <button id="plannedPaymentsSearchBtn" class="button-primary"><i class="bi bi-search"></i></button>
+        </div>
+
+        <a href="#" id="toggleFiltersBtn" style="color: var(--primary-color); text-decoration: none; font-size: 0.9rem;">
+            <i class="bi bi-chevron-down"></i> <span>Показать дополнительные фильтры</span>
+        </a>
+        
+        <div id="advancedFiltersContainer" style="display: none; margin-top: 1rem; border: 1px solid var(--border-color); padding: 1.5rem; border-radius: var(--border-radius-md);">
+            <div class="form-row" style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem;">
+                <div class="form-group">
+                    <label>Планируемая сумма</label>
+                    <div class="input-group" style="display: flex;">
+                        <input type="number" id="filterAmountFrom" class="form-control" placeholder="От">
+                        <input type="number" id="filterAmountTo" class="form-control" placeholder="До">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Учебный год</label>
+                    <div class="input-group" style="display: flex;">
+                        <input type="number" id="filterYearFrom" class="form-control" placeholder="Начало (гггг)">
+                        <input type="number" id="filterYearTo" class="form-control" placeholder="Конец (гггг)">
+                    </div>
+                </div>
+                 <div class="form-group">
+                    <label for="filterPaymentDate">Планируемая дата оплаты</label>
+                    <input type="date" id="filterPaymentDate" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="filterClass">Класс</label>
+                    <select id="filterClass" class="form-control">
+                        <option value="">Все классы</option>
+                    </select>
+                </div>
+            </div>
+            <div class="filters-actions" style="margin-top: 1rem; text-align: right;">
+                <button id="resetFiltersBtn" class="button-secondary">Сбросить</button>
+                <button id="applyFiltersBtn" class="button-primary">Применить</button>
+            </div>
+        </div>
+
+        <div class="table-responsive-wrapper" style="margin-top: 1.5rem;">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th class="text-center">Действия</th>
+                        <th>Номер договора</th>
+                        <th>ФИО ученика</th>
+                        <th>Класс</th>
+                        <th>Планируемая сумма</th>
+                        <th>Планируемая дата</th>
+                        <th>Наименование платежа</th>
+                        <th>Комментарий</th>
+                    </tr>
+                </thead>
+                <tbody id="plannedPaymentsTableBody">
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="card-footer">
+        <div class="pagination-container" id="paginationContainer"></div>
+    </div>
+</div>
+
+<!-- Модальное окно создания/пересоздания плана -->
+<div id="paymentModal" class="modal-overlay" style="display: none;">
+    <div class="modal-content" style="max-width: 800px;">
+        <div class="modal-header">
+            <h4 id="paymentModalTitle">Создать план платежей за учебный год</h4>
+            <button id="closePaymentModalBtn" class="close-button">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form id="paymentForm" onsubmit="return false;">
+                <div id="contractSelectionContainer">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="payment_classSelect">1. Класс</label>
+                            <select id="payment_classSelect" class="form-control" required></select>
+                        </div>
+                        <div class="form-group">
+                            <label for="payment_studentSelect">2. Ученик/ца</label>
+                            <select id="payment_studentSelect" class="form-control" required disabled></select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="payment_contractSelect">3. Договор</label>
+                        <select id="payment_contractSelect" class="form-control" required disabled></select>
+                    </div>
+                </div>
+                <hr>
+
+                <div id="planGeneratorContainer" style="display: none;">
+                    <div class="form-row" style="grid-template-columns: 1fr 1fr; gap: 1rem; align-items: end;">
+                        <div class="form-group">
+                            <label>Создать платежи за:</label>
+                            <div class="year-inputs" style="display: flex; align-items: center; gap: 10px;">
+                                <input type="number" id="plan_startYear" class="form-control" readonly style="min-width: 90px;">
+                                <span>-</span>
+                                <input type="number" id="plan_endYear" class="form-control" readonly style="min-width: 90px;">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="plan_paymentForm">Форма оплаты</label>
+                            <select id="plan_paymentForm" class="form-control" required></select>
+                        </div>
+                    </div>
+                    <div class="form-row" style="grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div class="form-group">
+                            <label>Сумма договора</label>
+                            <input type="text" id="plan_totalAmount" class="form-control" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label>Сумма с учётом скидки</label>
+                            <input type="text" id="plan_discountedAmount" class="form-control" readonly>
+                        </div>
+                    </div>
+                    
+                    <div id="plan_installments_container" style="margin-top: 1rem;">
+                        <!-- Превью графика платежей будет здесь -->
+                    </div>
+
+                    <div class="form-group" style="margin-top: 1rem;">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="plan_hasContribution" name="hasContribution"> Вступительный взнос
+                        </label>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" id="cancelPaymentBtn" class="button-secondary">Отмена</button>
+            <button type="submit" id="savePaymentBtn" form="paymentForm" class="button-primary">Сохранить</button>
+        </div>
+    </div>
+</div>
+
+<!-- Модальное окно редактирования ОДНОГО платежа -->
+<div id="editSinglePaymentModal" class="modal-overlay" style="display: none;">
+    <div class="modal-content" style="max-width: 600px;">
+        <div class="modal-header">
+            <h4 id="editSinglePaymentModalTitle">Изменить запись в плане</h4>
+            <button id="closeEditSinglePaymentModalBtn" class="close-button">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form id="editSinglePaymentForm" onsubmit="return false;">
+                <input type="hidden" id="edit_paymentId">
+                <div class="form-group">
+                    <label for="edit_paymentName">Наименование платежа</label>
+                    <input type="text" id="edit_paymentName" name="paymentName" class="form-control">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="edit_paymentDate">Планируемая дата</label>
+                        <input type="date" id="edit_paymentDate" name="paymentDate" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="edit_plannedAmount">Планируемая сумма</label>
+                        <input type="number" id="edit_plannedAmount" name="plannedAmount" class="form-control" step="0.01">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="edit_comment">Комментарий</label>
+                    <textarea id="edit_comment" name="comment" class="form-control" rows="3"></textarea>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" id="cancelEditSinglePaymentBtn" class="button-secondary">Отмена</button>
+            <button type="submit" id="saveSinglePaymentBtn" form="editSinglePaymentForm" class="button-primary">Сохранить изменения</button>
+        </div>
+    </div>
+</div>
+
+
+<!-- Модальное окно просмотра деталей -->
+<div id="viewPaymentModal" class="modal-overlay" style="display: none;">
+    <div class="modal-content" style="max-width: 600px;">
+        <div class="modal-header">
+            <h4>Детали платежа</h4>
+            <button id="closeViewPaymentModalBtn" class="close-button">&times;</button>
+        </div>
+        <div class="modal-body" id="viewPaymentModalBody">
+            <!-- Детали будут загружены сюда -->
+        </div>
+        <div class="modal-footer">
+            <button id="closeViewModalFooterBtn" class="button-secondary">Закрыть</button>
+        </div>
+    </div>
+</div>

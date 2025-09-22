@@ -1,0 +1,80 @@
+/* static/css/budget.css */
+
+.department-row td {
+    background-color: #f8f9fa; /* Светло-серый фон для строки подразделения */
+    font-weight: 600; /* Жирный шрифт */
+    font-size: 1.1rem; /* Немного увеличенный шрифт */
+    color: var(--text-color-primary);
+    padding-top: 1.5rem !important; /* Увеличенный верхний отступ для визуального разделения */
+}
+
+.budget-item-name {
+    padding-left: 2rem !important; /* Отступ слева для статьи бюджета */
+    font-weight: 500;
+}
+
+.registry-item-name {
+    padding-left: 4rem !important; /* Еще больший отступ для статьи в реестре */
+    color: var(--text-color-secondary);
+}
+
+.text-right {
+    text-align: right;
+}
+
+/* Стиль для кнопки удаления в модальных окнах */
+.remove-field-btn {
+    background: none;
+    border: none;
+    color: var(--danger-color);
+    cursor: pointer;
+    padding: 5px;
+}
+
+.remove-field-btn:hover {
+    color: darkred;
+}
+
+/* Это правило не дает иконке "перехватывать" клик, предназначенный для кнопки */
+.remove-field-btn i {
+    pointer-events: none;
+}
+.departments-list {
+    max-height: 250px;
+    overflow-y: auto;
+    margin-bottom: 1rem;
+    padding-right: 5px;
+}
+
+.department-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-md);
+    margin-bottom: 0.5rem;
+    background-color: #fff;
+}
+
+.department-item-name {
+    flex-grow: 1;
+    padding: 0.25rem;
+}
+.department-item-name input {
+    margin: -0.25rem; /* Компенсация внутренних отступов инпута */
+}
+
+
+.department-item-actions button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-left: 0.5rem;
+    font-size: 1.1rem;
+    color: var(--text-color-secondary);
+}
+
+.department-item-actions button:hover {
+    color: var(--primary-color);
+}

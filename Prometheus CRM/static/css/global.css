@@ -1,0 +1,619 @@
+/* ===================================================================
+   Prometheus CRM/static/css/global.css
+   Description: Global styles for basic HTML elements and reusable UI components.
+   Depends on: variables.css
+   =================================================================== */
+
+/* Import variables for use in this file */
+@import url('./variables.css');
+
+/* --- 1. Base HTML Styles --- */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: var(--font-family-base);
+    font-size: var(--font-size-base);
+    line-height: 1.5;
+    color: var(--text-color-primary);
+    background-color: var(--background-color);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+*, *::before, *::after {
+    box-sizing: border-box; /* Ensure consistent box model */
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin-top: 0;
+    margin-bottom: var(--spacing-md);
+    font-weight: 600;
+    color: var(--text-color-primary);
+}
+
+h1 { font-size: 2.25rem; } /* 36px */
+h2 { font-size: 1.875rem; } /* 30px */
+h3 { font-size: 1.5rem; } /* 24px */
+h4 { font-size: 1.25rem; } /* 20px */
+h5 { font-size: 1.125rem; } /* 18px */
+h6 { font-size: 1rem; } /* 16px */
+
+a {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: color var(--transition-speed-fast) var(--transition-ease);
+}
+
+a:hover {
+    color: var(--primary-hover-color);
+    text-decoration: underline;
+}
+
+p {
+    margin-top: 0;
+    margin-bottom: var(--spacing-md);
+}
+
+hr {
+    border: none;
+    border-top: 1px solid var(--border-color);
+    margin: var(--spacing-lg) 0;
+}
+
+/* --- 2. Reusable UI Components --- */
+
+/* Buttons */
+.button-primary {
+    display: inline-flex; /* Allows icon and text alignment */
+    align-items: center;
+    gap: var(--spacing-sm); /* Space between icon and text */
+    padding: 0.75rem 1.25rem; /* 12px 20px */
+    border: none;
+    border-radius: var(--border-radius-md);
+    background-color: var(--primary-color);
+    color: var(--card-background-color); /* White text */
+    font-size: var(--font-size-base);
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color var(--transition-speed-normal) var(--transition-ease),
+                box-shadow var(--transition-speed-normal) var(--transition-ease);
+}
+
+.button-primary:hover {
+    background-color: var(--primary-hover-color);
+    box-shadow: var(--shadow-sm);
+}
+
+.button-primary:active {
+    transform: translateY(1px); /* Simple press effect */
+}
+
+.button-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: 0.75rem 1.25rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-md);
+    background-color: var(--card-background-color);
+    color: var(--text-color-primary);
+    font-size: var(--font-size-base);
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color var(--transition-speed-normal) var(--transition-ease),
+                border-color var(--transition-speed-normal) var(--transition-ease);
+}
+
+.button-secondary:hover {
+    background-color: var(--background-color);
+    border-color: var(--text-color-secondary);
+}
+
+/* Close button for modals/alerts */
+.close-button {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--text-color-secondary);
+    transition: color var(--transition-speed-fast) var(--transition-ease);
+    position: absolute; /* Often used in modal headers */
+    top: var(--spacing-md);
+    right: var(--spacing-lg);
+}
+
+.close-button:hover {
+    color: var(--text-color-primary);
+}
+
+/* Cards */
+.card {
+    background-color: var(--card-background-color);
+    border-radius: var(--border-radius-md);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-sm);
+    margin-bottom: var(--spacing-xl); /* Space below cards */
+    display: flex;
+    flex-direction: column;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-lg) var(--spacing-xl); /* 24px 32px */
+    border-bottom: 1px solid var(--border-color);
+}
+
+.card-header h3 {
+    margin: 0;
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+}
+
+.card-body {
+    padding: var(--spacing-xl);
+    flex-grow: 1;
+}
+
+.card-footer {
+    padding: var(--spacing-md) var(--spacing-xl);
+    border-top: 1px solid var(--border-color);
+    background-color: var(--background-color);
+}
+
+/* --- FIX: Responsive Table Wrapper --- */
+.table-responsive-wrapper {
+    overflow-x: auto; /* Adds horizontal scrollbar ONLY when needed */
+    width: 100%;
+}
+
+/* Data Tables */
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--font-size-base);
+    line-height: 1.5;
+}
+
+.data-table thead th {
+    padding: var(--spacing-md) var(--spacing-lg); /* 16px 24px */
+    text-align: left;
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    color: var(--text-color-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 2px solid var(--border-color);
+    white-space: nowrap; /* Prevent wrapping in headers */
+}
+
+.data-table tbody tr {
+    transition: background-color var(--transition-speed-fast) var(--transition-ease);
+}
+
+.data-table tbody tr:hover {
+    background-color: var(--background-color); /* Light gray on hover */
+}
+
+.data-table td {
+    padding: var(--spacing-lg) var(--spacing-xl); /* 24px 32px */
+    border-bottom: 1px solid var(--border-color);
+    vertical-align: middle;
+    color: var(--text-color-primary);
+}
+
+.data-table tbody tr:last-of-type td {
+    border-bottom: none; /* No border for the last row */
+}
+
+/* Text alignment helpers */
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+
+/* Status Badges (Example) */
+.status-badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: var(--border-radius-full);
+    font-size: 0.75rem; /* 12px */
+    font-weight: 600;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.status-badge.active {
+    background-color: rgba(72, 187, 120, 0.1); /* Light green */
+    color: var(--success-color);
+}
+
+.status-badge.blocked {
+    background-color: rgba(229, 62, 62, 0.1); /* Light red */
+    color: var(--danger-color);
+}
+
+/* Form Elements */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: var(--spacing-lg);
+}
+
+.form-group label {
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    color: var(--text-color-secondary);
+    margin-bottom: var(--spacing-sm);
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="tel"],
+.form-group input[type="password"],
+.form-group input[type="date"],
+.form-group input[type="number"],
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 0.625rem 0.875rem; /* 10px 14px */
+    font-size: var(--font-size-base);
+    font-family: var(--font-family-base);
+    background-color: var(--card-background-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-md);
+    transition: border-color var(--transition-speed-fast) var(--transition-ease),
+                box-shadow var(--transition-speed-fast) var(--transition-ease);
+    box-sizing: border-box; /* Include padding/border in element's total width/height */
+    color: var(--text-color-primary);
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: var(--text-color-light);
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2); /* Focus ring */
+}
+
+.form-group textarea {
+    resize: vertical; /* Allow vertical resizing for textareas */
+    min-height: 80px;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    font-size: var(--font-size-base);
+    color: var(--text-color-primary);
+    cursor: pointer;
+}
+
+.checkbox-label input[type="checkbox"] {
+    margin-right: var(--spacing-sm);
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+/* Form Rows for multiple inputs on one line */
+.form-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-lg); /* Gap between form groups in a row */
+    margin-bottom: var(--spacing-lg);
+}
+
+/* Modal Overlays (used for all modals) */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(31, 41, 55, 0.5); /* Semi-transparent dark background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Ensure it's on top */
+    backdrop-filter: blur(4px); /* Subtle blur effect */
+    -webkit-backdrop-filter: blur(4px); /* For Safari */
+}
+
+.modal-content {
+    background-color: var(--card-background-color);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-lg);
+    width: 90%; /* Responsive width */
+    max-width: 700px; /* Max width for larger screens */
+    max-height: 90vh; /* Max height to prevent overflow on small screens */
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; /* Hide scrollbars if content overflows */
+    position: relative; /* For positioning close button */
+}
+
+.modal-header {
+    padding: var(--spacing-lg) var(--spacing-xl);
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative; /* For close button */
+}
+
+.modal-header h4 {
+    margin: 0;
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+}
+
+.modal-body {
+    padding: var(--spacing-xl);
+    overflow-y: auto; /* Enable scrolling for modal content */
+    flex-grow: 1; /* Allow body to take available space */
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--spacing-md);
+    padding: var(--spacing-lg) var(--spacing-xl);
+    border-top: 1px solid var(--border-color);
+    background-color: var(--background-color); /* Slightly different background for footer */
+}
+
+/* Alerts/Messages */
+.alert-danger, .alert-success, .alert-info, .alert-warning {
+    padding: var(--spacing-md);
+    border-radius: var(--border-radius-md);
+    margin-bottom: var(--spacing-lg);
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+}
+
+.alert-danger {
+    background-color: rgba(229, 62, 62, 0.1);
+    color: var(--danger-color);
+    border: 1px solid var(--danger-color);
+}
+
+.alert-success {
+    background-color: rgba(72, 187, 120, 0.1);
+    color: var(--success-color);
+    border: 1px solid var(--success-color);
+}
+
+/* Action Dropdown (for table actions) */
+.action-dropdown {
+    position: relative;
+    display: inline-block; /* Allows dropdown to position relative to button */
+}
+
+.action-button {
+    background-color: var(--background-color);
+    color: var(--text-color-secondary);
+    padding: 0.5rem 0.75rem; /* 8px 12px */
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-md);
+    cursor: pointer;
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    transition: all var(--transition-speed-fast) var(--transition-ease);
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+}
+
+.action-button:hover {
+    background-color: #F3F4F6;
+    border-color: #D1D5DB;
+    color: var(--text-color-primary);
+}
+
+.action-dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: var(--card-background-color);
+    min-width: 180px;
+    box-shadow: var(--shadow-md);
+    z-index: 100;
+    border-radius: var(--border-radius-md);
+    border: 1px solid var(--border-color);
+    overflow: hidden;
+    right: 0; /* Align to the right of the button */
+    top: calc(100% + var(--spacing-sm)); /* Position below the button */
+    transform-origin: top right;
+    animation: fadeInScale 0.2s ease-out forwards; /* Simple animation */
+}
+
+.action-dropdown.show .action-dropdown-content {
+    display: block;
+}
+
+.action-dropdown-content a {
+    color: var(--text-color-primary);
+    padding: 0.625rem 1rem; /* 10px 16px */
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    font-size: var(--font-size-sm);
+    transition: background-color var(--transition-speed-fast) var(--transition-ease);
+}
+
+.action-dropdown-content a:hover {
+    background-color: var(--background-color);
+    color: var(--primary-color);
+}
+
+/* Keyframe for dropdown animation */
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.95) translateY(-5px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* --- NEW: Pagination Styles --- */
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: var(--spacing-lg);
+}
+
+.pagination {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border-radius: var(--border-radius-md);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-color);
+}
+
+.page-item .page-link {
+    color: var(--primary-color);
+    background-color: var(--card-background-color);
+    padding: 0.625rem 1rem;
+    border-left: 1px solid var(--border-color);
+    text-decoration: none;
+    transition: background-color var(--transition-speed-fast) var(--transition-ease), color var(--transition-speed-fast) var(--transition-ease);
+}
+
+.page-item:first-child .page-link {
+    border-left: none;
+}
+
+.page-item .page-link:hover {
+    background-color: var(--background-color);
+}
+
+.page-item.active .page-link {
+    z-index: 1;
+    color: var(--card-background-color);
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    cursor: default;
+}
+
+.page-item.disabled .page-link {
+    color: var(--text-color-light);
+    pointer-events: none;
+    cursor: default;
+    background-color: var(--background-color);
+}
+
+
+/* Utility classes for flexbox/grid layouts */
+.flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.flex-between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .card-header, .card-body, .modal-header, .modal-body, .modal-footer {
+        padding: var(--spacing-md); /* Reduce padding on smaller screens */
+    }
+
+    .form-row {
+        grid-template-columns: 1fr; /* Stack form fields vertically on small screens */
+        gap: var(--spacing-md);
+    }
+
+    .modal-content {
+        margin: var(--spacing-lg) auto; /* Adjust margin for smaller screens */
+    }
+
+    .data-table thead {
+        display: none; /* Hide table headers on small screens */
+    }
+
+    .data-table, .data-table tbody, .data-table tr, .data-table td {
+        display: block; /* Make table responsive by stacking cells */
+        width: 100%;
+    }
+
+    .data-table tr {
+        margin-bottom: var(--spacing-md);
+        border: 1px solid var(--border-color);
+        border-radius: var(--border-radius-md);
+        overflow: hidden;
+        box-shadow: var(--shadow-sm);
+    }
+
+    .data-table td {
+        text-align: right;
+        padding: var(--spacing-sm) var(--spacing-md);
+        position: relative;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .data-table td::before {
+        content: attr(data-label); /* Use data-label for pseudo-elements */
+        position: absolute;
+        left: var(--spacing-md);
+        width: 50%;
+        padding-right: var(--spacing-sm);
+        white-space: nowrap;
+        text-align: left;
+        font-weight: 600;
+        color: var(--text-color-secondary);
+    }
+
+    .data-table tbody tr:last-of-type td {
+        border-bottom: 1px solid var(--border-color); /* Add back border for stacked rows */
+    }
+    .data-table tbody tr:last-of-type {
+        margin-bottom: 0; /* Remove extra margin for last row */
+    }
+}
+/* --- Стили для контейнера поиска --- */
+.search-container {
+    display: flex;
+    width: 100%;
+    max-width: 500px; /* Можете изменить максимальную ширину по вашему вкусу */
+}
+
+.search-container .form-control {
+    flex-grow: 1; /* Поле ввода будет занимать всё доступное место */
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-right: none; /* Убираем правую границу для "склеивания" с кнопкой */
+    margin-bottom: 0; 
+}
+
+.search-container .button-primary {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    flex-shrink: 0; /* Кнопка не будет сжиматься */
+}
+/* --- Стили для встроенного редактора расписания --- */
+#schedule-editor-container {
+    display: none; /* По умолчанию редактор скрыт */
+    margin-top: var(--spacing-xl); /* Отступ сверху, чтобы отделить от таблицы */
+}
+
+#schedule-editor-container .card-footer {
+    text-align: right; /* Выравниваем кнопку сохранения по правому краю */
+}

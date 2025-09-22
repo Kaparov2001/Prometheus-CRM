@@ -1,0 +1,189 @@
+/* ===================================================================
+   Prometheus CRM/static/css/contracts.css
+   Description: Specific styles for the "Contracts" list and modal.
+   Depends on: variables.css, global.css
+   =================================================================== */
+
+@import url('./global.css');
+
+/* --- 1. Стили для страницы и таблицы --- */
+
+/* Поле поиска и фильтры */
+.filters-section {
+    position: relative;
+    max-width: 400px;
+    margin-bottom: 1rem;
+}
+.filters-section::before {
+    content: '\F52A'; /* bootstrap-icons search */
+    font-family: 'bootstrap-icons';
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-color-light);
+    font-size: 1rem;
+    pointer-events: none;
+}
+#contractsSearchInput {
+    padding-left: 2.5rem;
+    border-radius: var(--border-radius-full);
+}
+
+/* --- 2. Кнопка "Действия" в таблице --- */
+.contracts-list-table .action-button {
+    background-color: transparent;
+    border: 1px solid transparent;
+    color: var(--text-color-secondary);
+    transition: all 0.2s ease;
+}
+.contracts-list-table .action-button:hover {
+    background-color: var(--background-color);
+    border-color: var(--border-color);
+    color: var(--text-color-primary);
+}
+.contracts-list-table .action-dropdown.show .action-button {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: #fff;
+}
+
+/* --- 3. Макет модального окна договора (flex) --- */
+.modal-contract {
+    height: 85vh;
+    max-height: 800px;
+}
+.modal-contract .modal-body {
+    padding: 0;
+    display: flex;
+    overflow: hidden;
+    height: 100%;
+}
+
+/* Левая панель формы */
+.contract-form-panel {
+    width: 65%;
+    padding: var(--spacing-xl);
+    border-right: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+}
+.contract-form-panel form {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+.contract-form-panel .form-content {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding-right: 1rem;
+}
+.contract-form-panel .modal-footer {
+    flex-shrink: 0;
+    margin-top: auto;
+    padding: var(--spacing-lg) 0 0 0;
+    border-top: 1px solid var(--border-color);
+    background-color: transparent;
+}
+
+/* Правая панель со списком учеников */
+.student-list-panel {
+    width: 35%;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--background-color);
+}
+.student-list-panel h5 {
+    padding: var(--spacing-lg);
+    margin: 0;
+    border-bottom: 1px solid var(--border-color);
+    font-size: 1rem;
+    font-weight: 600;
+}
+.student-list-container {
+    flex-grow: 1;
+    overflow-y: auto;
+}
+.student-list-item {
+    display: flex;
+    align-items: center;
+    padding: var(--spacing-sm) var(--spacing-lg);
+    cursor: pointer;
+    border-bottom: 1px solid var(--border-color);
+    transition: background-color 0.2s ease;
+}
+.student-list-item:hover { background-color: #e9ecef; }
+.student-list-item.active {
+    background-color: var(--primary-color);
+    color: #fff;
+}
+.student-list-item .user-photo-sm {
+    width: 32px;
+    height: 32px;
+    margin-right: var(--spacing-md);
+}
+
+/* --- 4. Адаптивность (заглушка под вашу таблицу) --- */
+@media (max-width: 768px) {
+    /* при необходимости добавьте стили адаптации таблицы/панелей */
+}
+
+/* -------------------------------------------------------------------
+   5) Меню действий: «портал»-дружелюбные стили (не во всю ширину)
+   ------------------------------------------------------------------- */
+
+/* Чтобы меню не срезалось родителями с overflow */
+.contracts-page .table-responsive-wrapper { overflow: visible; }
+.contracts-page .card,
+.contracts-page .card-body { overflow: visible; }
+
+/* Обёртка в ячейке таблицы */
+.action-dropdown { position: relative; }
+
+/* Базовое состояние выпадающего меню */
+.action-dropdown .action-dropdown-content {
+    position: absolute;
+    top: calc(100% + 6px);
+    right: 0;
+    z-index: 2000;
+    display: none;
+
+    /* компактный вид */
+    background: var(--card-background-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow-lg);
+    padding: 8px 0;
+
+    min-width: 260px;          /* не меньше 260px */
+    width: max-content;        /* по контенту, НЕ тянем на всю ширину */
+    max-width: 360px;          /* ограничитель на длинные строки */
+
+    max-height: 60vh;          /* прокрутка при большом списке */
+    overflow: auto;
+    will-change: transform;
+}
+
+/* Показ меню при открытии (класс навешивает JS) */
+.action-dropdown .action-dropdown-content.open { display: block; }
+/* и на случай переноса в <body> */
+.action-dropdown-content.open { display: block !important; z-index: 3000; }
+
+/* Пункты внутри меню */
+.action-dropdown-content a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    color: var(--text-color-primary);
+    text-decoration: none;
+    white-space: nowrap;
+}
+.action-dropdown-content a:hover { background: var(--background-color); }
+
+/* Разделитель в меню */
+.action-dropdown-content hr {
+    margin: 6px 0;
+    border: none;
+    border-top: 1px solid var(--border-color);
+}

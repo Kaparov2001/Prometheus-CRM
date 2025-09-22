@@ -1,0 +1,59 @@
+<div class="card">
+    <div class="card-body">
+        <div class="search-container">
+            <input type="text" id="paymentFormSearchInput" class="form-control" placeholder="Поиск по названию формы...">
+            <button id="searchBtn" class="button-primary"><i class="bi bi-search"></i></button>
+        </div>
+        
+        <hr>
+
+        <div class="advanced-filters-toggle">
+            <span id="toggleFiltersBtn" style="cursor: pointer; color: var(--primary-color);">
+                <i class="bi bi-chevron-down"></i>
+                <span>Показать дополнительные фильтры</span>
+            </span>
+        </div>
+
+        <div id="advancedFiltersContainer" style="display: none; margin-top: 1rem;">
+            <div class="filters-body">
+                 <div class="form-group">
+                    <label for="paymentFormNameFilter">Имя</label>
+                    <input type="text" id="paymentFormNameFilter" class="form-control" placeholder="Фильтр по точному имени...">
+                </div>
+                </div>
+            <div class="filters-actions" style="margin-top: 1rem;">
+                <button id="applyPaymentFormFiltersBtn" class="button-primary">Применить</button>
+                <button id="resetPaymentFormFiltersBtn" class="button-secondary">Сбросить</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h3>Справочник: Формы оплаты</h3>
+        <button id="addPaymentFormBtn" class="button-primary">
+            <i class="bi bi-plus-lg"></i> Создать форму оплаты
+        </button>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive-wrapper">
+            <table class="data-table payment-forms-list-table">
+                <thead>
+                    <tr>
+                        <th class="text-center">Действия</th>
+                        <th>Имя</th>
+                        <th>Количество платежей</th>
+                    </tr>
+                </thead>
+                <tbody id="paymentFormsTableBody">
+                    <tr><td colspan="3" class="text-center">Загрузка...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="card-footer">
+        <div class="pagination-container" id="paginationContainer">
+            </div>
+    </div>
+</div>

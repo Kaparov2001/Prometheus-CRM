@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Регистрация | Prometheus CRM</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Google Fonts - Inter for modern typography -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- NEW: Link to global CSS variables and common styles -->
+  <link rel="stylesheet" href="/static/css/variables.css">
+  <link rel="stylesheet" href="/static/css/global.css">
+  <!-- Login/Register page specific styles -->
+  <link rel="stylesheet" href="/static/css/style_login.css">
+
+  <!-- LottieFiles for animation -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
+</head>
+<body>
+  <div class="login-split">
+    <div class="login-left">
+      <img src="/static/logo.png" alt="Prometheus School" class="login-logo">
+      <div id="lottie-illustration" class="login-illustration"></div>
+    </div>
+
+    <div class="login-right">
+      <form id="registerForm" class="login-form" onsubmit="return false;">
+        <h2>Создать аккаунт</h2>
+
+        <input type="text" id="login" name="login" class="form-control" placeholder="Логин *" required>
+        <input type="text" id="fullName" name="fullName" class="form-control" placeholder="Полное имя *" required>
+        <input type="email" id="email" name="email" class="form-control" placeholder="Email *" required>
+        <input type="tel" id="phone" name="phone" class="form-control" placeholder="Телефон">
+
+        <div class="password-container">
+          <input type="password" id="password" name="password" class="form-control" placeholder="Пароль (мин. 6 символов) *" required>
+        </div>
+        <div class="password-container">
+          <input type="password" id="confirmPassword" class="form-control" placeholder="Подтвердите пароль *" required>
+        </div>
+
+        <button type="submit" class="button-primary">Зарегистрироваться</button>
+
+        <!-- Removed inline style, now uses global .alert-danger class -->
+        <div id="registerError" class="alert-danger" style="display: none;"></div>
+
+        <div class="create-profile-link">
+          <span>Уже есть аккаунт?</span>
+          <a href="/" class="text-primary">Войти</a>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Main register JavaScript logic -->
+  <script type="module" src="/static/js/register.js"></script>
+  <script>
+    // Initialize Lottie animation
+    lottie.loadAnimation({
+      container: document.getElementById('lottie-illustration'),
+      renderer: 'svg',
+      loop: true,
+      autoplay: true,
+      path: '/static/lottie.json'
+    });
+  </script>
+</body>
+</html>

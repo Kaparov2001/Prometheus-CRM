@@ -1,0 +1,30 @@
+<!-- Content for dynamic loading into contentArea -->
+<div class="card">
+    <div class="card-header">
+        <h3>Список классов</h3>
+        <button id="addGradeBtn" class="button-primary">
+            <i class="bi bi-plus-lg"></i> Добавить класс
+        </button>
+    </div>
+    <div class="card-body">
+        <table class="data-table grades-list-table">
+            <thead>
+                <tr>
+                    <th class="text-center">Действия</th>
+                    <th>Класс</th>
+                    <th>Литер</th>
+                    <th>Кол-во учеников</th>
+                    <th>Классный руководитель</th>
+                    <th>Тип обучения</th>
+                    <th>Язык обучения</th>
+                </tr>
+            </thead>
+            <tbody id="gradesTableBody">
+                <!-- Data will be loaded by JavaScript. -->
+                <!-- IMPORTANT: Ensure your JavaScript rendering for <td> elements includes data-label attributes -->
+                <!-- Example: <td data-label="Класс">...</td> -->
+                <tr><td colspan="7" class="text-center">Загрузка данных...</td></tr>
+            </tbody>
+        </table>
+    </div>
+</div>

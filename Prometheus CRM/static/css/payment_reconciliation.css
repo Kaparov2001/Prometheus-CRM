@@ -1,0 +1,57 @@
+/* Стили для таблицы сверки платежей */
+.payment-reconciliation-table .details-col {
+    width: 40px;
+    text-align: center;
+}
+
+.details-toggle-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+    color: var(--primary-color);
+}
+
+.debt-amount {
+    color: var(--danger-color);
+    font-weight: bold;
+}
+
+.details-row > td {
+    padding: 0 !important;
+}
+
+.details-content {
+    padding: var(--spacing-lg);
+    background-color: #f9fafb;
+}
+
+.nested-table {
+    width: 100%;
+    margin-top: 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-md);
+    background-color: #fff;
+}
+
+.nested-table th, .nested-table td {
+    padding: var(--spacing-sm) var(--spacing-md);
+    text-align: left;
+}
+
+/* Стиль для оплаченных (погашенных) траншей (с повышенным приоритетом) */
+.nested-table tr.paid {
+    text-decoration: line-through !important;
+    color: var(--text-color-secondary) !important;
+    background-color: #f8f9fa !important;
+}
+/* === КОНЕЦ НОВОГО СТИЛЯ === */
+
+
+/* Стили для модального окна комментария */
+.char-counter {
+    text-align: right;
+    font-size: 0.8rem;
+    color: var(--text-color-secondary);
+    margin-top: 4px;
+}

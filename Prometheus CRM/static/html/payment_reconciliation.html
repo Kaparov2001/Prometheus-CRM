@@ -1,0 +1,58 @@
+<div class="card">
+    <div class="card-header">
+        <h3>Сверка платежей</h3>
+        <div class="header-actions">
+            <button id="exportExcelBtn" class="button-secondary">
+                <i class="bi bi-file-earmark-excel"></i> Экспорт в Excel
+            </button>
+            <button id="sendWhatsappBtn" class="button-primary">
+                <i class="bi bi-whatsapp"></i> Рассылка WhatsApp
+            </button>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive-wrapper">
+            <table class="data-table payment-reconciliation-table">
+                <thead>
+                    <tr>
+                        <th class="details-col"></th>
+                        <th>Действия</th>
+                        <th>Номер договора</th>
+                        <th>Фамилия ребенка</th>
+                        <th>Класс или группа</th>
+                        <th>Разница</th>
+                        <th>Комментарий</th>
+                    </tr>
+                </thead>
+                <tbody id="debtorsTableBody">
+                    </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="card-footer">
+        <div class="pagination-container" id="paginationContainer"></div>
+    </div>
+</div>
+
+<div id="commentModal" class="modal-overlay" style="display: none;">
+    <div class="modal-content" style="max-width: 500px;">
+        <div class="modal-header">
+            <h4>Добавление комментария</h4>
+            <button id="closeCommentModalBtn" class="close-button">&times;</button>
+        </div>
+        <form id="commentForm">
+            <div class="modal-body">
+                <input type="hidden" id="commentContractId">
+                <div class="form-group">
+                    <label for="commentText">Комментарий</label>
+                    <textarea id="commentText" name="comment" class="form-control" rows="4" maxlength="100" required></textarea>
+                    <div id="charCounter" class="char-counter">0/100</div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="cancelCommentBtn" class="button-secondary">Отмена</button>
+                <button type="submit" class="button-primary">Сохранить</button>
+            </div>
+        </form>
+    </div>
+</div>

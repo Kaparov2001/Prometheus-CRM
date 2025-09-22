@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Вход | Prometheus CRM</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Google Fonts - Inter for modern typography -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- NEW: Link to global CSS variables and common styles -->
+  <link rel="stylesheet" href="/static/css/variables.css">
+  <link rel="stylesheet" href="/static/css/global.css">
+  <!-- Login page specific styles -->
+  <link rel="stylesheet" href="/static/css/style_login.css">
+
+  <!-- LottieFiles for animation -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
+</head>
+<body>
+  <div class="login-split">
+    <div class="login-left">
+      <img src="/static/logo.png" alt="Prometheus School" class="login-logo">
+      <div id="lottie-illustration" class="login-illustration"></div>
+    </div>
+
+    <div class="login-right">
+      <form id="loginForm" class="login-form" onsubmit="return false;">
+        <h2>Войти</h2>
+
+        <input type="text" id="login" name="login" class="form-control" placeholder="Логин" required autofocus>
+
+        <div class="password-container">
+          <input type="password" id="password" class="form-control" placeholder="Пароль" required>
+          <span onclick="togglePassword(this)" class="password-toggle">👁</span>
+        </div>
+
+        <div class="form-options">
+          <label class="checkbox-label">
+            <input class="form-check-input" type="checkbox" id="rememberMe"> Запомнить
+          </label>
+          <a href="#" class="text-primary">Восстановить пароль</a>
+        </div>
+
+        <button type="submit" class="button-primary">Войти</button>
+
+        <!-- Removed inline style, now uses global .alert-danger class -->
+        <div id="loginError" class="alert-danger" style="display: none;"></div>
+        
+        <div class="language-switcher">
+          <img src="/static/flag-ru.png" alt="RU">
+          <img src="/static/flag-en.png" alt="EN">
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // Function to toggle password visibility
+    function togglePassword(icon) {
+      const passwordField = document.getElementById("password");
+      if (passwordField.type === "password") {
+        passwordField.type = "text";
+        icon.textContent = "🙈";
+      } else {
+        passwordField.type = "password";
+        icon.textContent = "👁";
+      }
+    }
+  </script>
+  <!-- Main login JavaScript logic -->
+  <script type="module" src="/static/js/login.js"></script>
+  <script>
+    // Initialize Lottie animation
+    lottie.loadAnimation({
+      container: document.getElementById('lottie-illustration'),
+      renderer: 'svg',
+      loop: true,
+      autoplay: true,
+      path: '/static/lottie.json'
+    });
+  </script>
+</body>
+</html>
