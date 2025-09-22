@@ -1,0 +1,18 @@
+# Файл: backend/Dockerfile.dev
+
+FROM golang:1.25-alpine
+
+WORKDIR /app
+
+# Устанавливаем Air
+RUN go install github.com/air-verse/air@latest
+
+# Копируем go.mod/go.sum и скачиваем зависимости для кэширования
+COPY go.mod go.sum ./
+RUN go mod download
+
+# Копируем остальной код (он будет переписан через volume)
+COPY . .
+
+# Запускаем Air, который будет следить за изменениями
+CMD ["air"]
